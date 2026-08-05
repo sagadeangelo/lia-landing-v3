@@ -26,6 +26,16 @@ import { Hero } from '../ui/Hero.js';
 import { HeroFX } from '../ui/HeroFX.js';
 import { Continuum } from '../ui/Continuum.js';
 import { ContinuumFX } from '../ui/ContinuumFX.js';
+import { Features } from '../ui/Features.js';
+import { TrainSection } from '../ui/TrainSection.js';
+import { Library } from '../ui/Library.js';
+import { SocialProof } from '../ui/SocialProof.js';
+import { Vision } from '../ui/Vision.js';
+import { AppShowcase } from '../ui/AppShowcase.js';
+import { About } from '../ui/About.js';
+import { CTA } from '../ui/CTA.js';
+import { Footer } from '../ui/Footer.js';
+import { EarlyAccess } from '../ui/EarlyAccess.js';
 
 const LIA_VERSION = '1.0.0-sprint-1';
 
@@ -111,7 +121,19 @@ export class LIA_OS {
       '<main id="lia-main" class="lia-main" role="main">',
       Hero.render(),
       Continuum.render(),
+      '<div style="padding-top: var(--space-4xl); position: relative; z-index: 10;">',
+      '<div class="lia-container"><div class="lia-divider"></div></div>',
+      Features.render(),
+      TrainSection.render(),
+      AppShowcase.render(),
+      Library.render(),
+      SocialProof.render(),
+      Vision.render(),
+      About.render(),
+      EarlyAccess.render(),
+      '</div>',
       '</main>',
+      Footer.render(),
     ].join('\n');
   }
 

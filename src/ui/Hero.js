@@ -36,35 +36,33 @@ export const Hero = {
 
               <div class="lia-hero__badge" role="status" aria-live="polite">
                 <span class="lia-hero__pulse" aria-hidden="true"></span>
-                <span class="lia-hero__badge-label">LIA OS v1.0 · SPRINT 2</span>
+                <span class="lia-hero__badge-label">Tu creatividad primero. La tecnología solo acelera el camino.</span>
               </div>
 
-              <p class="lia-eyebrow lia-hero__eyebrow">El sistema operativo cognitivo</p>
+              <p class="lia-eyebrow lia-hero__eyebrow">Plataforma para Autores Independientes</p>
 
               <h1 id="lia-hero-title" class="lia-hero__title lia-text-balance">
-                El talento humano,<br>
-                <em>aumentado por inteligencia artificial.</em>
+                Escribe tu libro.<br>
+                <em>Publícalo sin fricción. Sin perder tu voz.</em>
               </h1>
 
               <p class="lia-lead lia-hero__lead lia-text-pretty">
-                LIA es un ecosistema cognitivo que amplifica tu capacidad para
-                escribir, aprender, crear, encontrar empleo y vivir experiencias
-                inmersivas. No sustituye a nadie. Solo te hace imparable.
+                LIA potencia tu proceso creativo — sin reemplazar tu voz como autor. Escribe a la velocidad del pensamiento.
               </p>
 
               <div class="lia-hero__actions">
-                <a href="#explore" class="lia-btn lia-btn--primary" data-lia-action="explore">
-                  <span>Explorar el ecosistema</span>
+                <a href="#early-access" class="lia-btn lia-btn--primary" data-lia-action="explore">
+                  <span>Acceso Anticipado</span>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M5 12h14M13 5l7 7-7 7"/>
                   </svg>
                 </a>
-                <a href="#philosophy" class="lia-btn lia-btn--secondary" data-lia-action="philosophy">
+                <a href="#biblioteca" class="lia-btn lia-btn--secondary" data-lia-action="philosophy">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M12 8v4M12 16h.01"/>
                   </svg>
-                  <span>Nuestra filosofía</span>
+                  <span>Explorar biblioteca</span>
                 </a>
               </div>
 
