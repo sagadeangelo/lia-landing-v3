@@ -74,6 +74,7 @@ export class LIA_OS {
     console.time("_mountLayout");
     try {
       this._mountLayout();
+      CinematicIntro.init();
       console.log("OK _mountLayout");
     } catch(e) {
       console.error("_mountLayout", e);
