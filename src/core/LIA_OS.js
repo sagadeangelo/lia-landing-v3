@@ -25,6 +25,7 @@ import { NavigationMarkup } from '../ui/NavigationMarkup.js';
 import { Hero } from '../ui/Hero.js';
 import { HeroFX } from '../ui/HeroFX.js';
 import { Continuum } from '../ui/Continuum.js';
+import { ContinuumFX } from '../ui/ContinuumFX.js';
 
 const LIA_VERSION = '1.0.0-sprint-1';
 
@@ -130,6 +131,7 @@ export class LIA_OS {
       hideThreshold: 700,
     }));
     this.register('heroFx', new HeroFX());
+    this.register('continuumFx', new ContinuumFX());
   }
 
   _navOffsetPx() {
