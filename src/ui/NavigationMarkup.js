@@ -7,7 +7,7 @@ export const NavigationMarkup = {
   render() {
     return /* html */ `
       <nav id="lia-nav" class="lia-nav" aria-label="Navegación principal">
-        <div class="lia-nav__container">
+        <div class="lia-nav__inner">
           <a href="#top" class="lia-nav__brand" aria-label="Volver al inicio">
             <span class="lia-nav__logo" aria-hidden="true">
               <svg viewBox="0 0 24 24">
