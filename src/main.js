@@ -1,22 +1,16 @@
-/**
- * Entrypoint Vite.
- * Importa el sistema de estilos global y arranca LIA_OS.
- */
-
 import './styles/global.css';
-import { LIA_OS } from './core/LIA_OS.js';
 
-const boot = () => {
-  if (window.__lia_booted__) return;
-  window.__lia_booted__ = true;
-  const os = new LIA_OS();
-  os.boot().catch((err) => {
-    console.error('[LIA_OS] Boot fallido:', err);
-  });
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', boot, { once: true });
-} else {
-  boot();
-}
+document.body.innerHTML = `
+  <div style="
+    color:white;
+    background:#030814;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+    font-family:sans-serif;
+  ">
+    LIA V3 ARRANCÓ 🚀
+  </div>
+`;
