@@ -3,7 +3,7 @@
  * Importa el sistema de estilos global y arranca LIA_OS.
  */
 
-import './styles/global.css';
+// CSS is now loaded via <link> in index.html
 import { LIA_OS } from './core/LIA_OS.js';
 
 const boot = () => {
