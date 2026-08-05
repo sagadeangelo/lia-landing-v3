@@ -1,16 +1,28 @@
 import './styles/global.css';
+import { LIA_OS } from './core/LIA_OS.js';
 
-document.body.innerHTML = `
-  <div style="
-    color:white;
-    background:#030814;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:40px;
-    font-family:sans-serif;
-  ">
-    LIA V3 ARRANCÓ 🚀
-  </div>
-`;
+console.log("MAIN 1");
+
+const boot = async () => {
+
+    console.log("MAIN 2");
+
+    try{
+
+        const os = new LIA_OS();
+
+        console.log("MAIN 3");
+
+        await os.boot();
+
+        console.log("MAIN 4");
+
+    }catch(err){
+
+        console.error(err);
+
+    }
+
+}
+
+boot();
