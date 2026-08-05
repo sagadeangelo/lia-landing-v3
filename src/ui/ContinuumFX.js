@@ -41,7 +41,7 @@ export class ContinuumFX {
       });
     }, {
       root: null,
-      rootMargin: '-10% 0px -10% 0px',
+      rootMargin: '0px 0px -5% 0px',
       threshold: [0, 0.25, 0.5, 0.75, 1]
     });
 

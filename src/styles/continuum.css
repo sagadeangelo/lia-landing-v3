@@ -24,9 +24,9 @@
   padding-block: var(--lia-space-4xl);
 }
 
-/* Espaciado narrativo masivo para sentir el viaje */
+/* Espaciado narrativo ajustado para mantener conexión visual constante */
 .lia-node + .lia-node {
-  margin-top: 25vh;
+  margin-top: 15vh;
 }
 
 .lia-node__content {
