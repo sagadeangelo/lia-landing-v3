@@ -69,10 +69,49 @@ export class LIA_OS {
     this._bootStarted = performance.now();
     this._log('Booting…');
 
-    this._mountLayout();
-    this._registerCoreModules();
-    this._registerUIModules();
-    this._startRAFLoop();
+    console.group("LIA BOOT");
+
+    console.time("_mountLayout");
+    try {
+      this._mountLayout();
+      console.log("OK _mountLayout");
+    } catch(e) {
+      console.error("_mountLayout", e);
+      throw e;
+    }
+    console.timeEnd("_mountLayout");
+
+    console.time("_registerCoreModules");
+    try {
+      this._registerCoreModules();
+      console.log("OK _registerCoreModules");
+    } catch(e) {
+      console.error("_registerCoreModules", e);
+      throw e;
+    }
+    console.timeEnd("_registerCoreModules");
+
+    console.time("_registerUIModules");
+    try {
+      this._registerUIModules();
+      console.log("OK _registerUIModules");
+    } catch(e) {
+      console.error("_registerUIModules", e);
+      throw e;
+    }
+    console.timeEnd("_registerUIModules");
+
+    console.time("_startRAFLoop");
+    try {
+      this._startRAFLoop();
+      console.log("OK _startRAFLoop");
+    } catch(e) {
+      console.error("_startRAFLoop", e);
+      throw e;
+    }
+    console.timeEnd("_startRAFLoop");
+
+    console.groupEnd();
 
     this._booted = true;
     this._log(`Boot OK · ${Math.round(performance.now() - this._bootStarted)}ms`);
@@ -101,6 +140,7 @@ export class LIA_OS {
    * @param {{ raf?: (t:number)=>void, destroy?: ()=>void, active?: boolean }} instance
    */
   register(name, instance) {
+    console.log(`Register: ${name}`);
     this.modules.set(name, instance);
     return instance;
   }
@@ -120,27 +160,37 @@ export class LIA_OS {
     const shell = document.getElementById('app-layer');
     if (!shell) throw new Error('[LIA_OS] #app-layer no encontrado en index.html.');
 
+    const safeRender = (name, renderFn) => {
+      try {
+        return renderFn();
+      } catch (e) {
+        console.error(`ERROR EN ${name}`, e);
+        return `<div style="color:red; padding: 20px;">ERROR EN ${name}: ${e.message}</div>`;
+      }
+    };
+
     shell.innerHTML = [
-      CinematicIntro.render(),
-      NavigationMarkup.render(),
+      safeRender("CinematicIntro", CinematicIntro.render),
+      safeRender("NavigationMarkup", NavigationMarkup.render),
       '<main id="lia-main" class="lia-main" role="main">',
-      Hero.render(),
-      Continuum.render(),
+      safeRender("Hero", Hero.render),
+      safeRender("Continuum", Continuum.render),
       '<div style="padding-top: var(--space-4xl); position: relative; z-index: 10;">',
       '<div class="lia-container"><div class="lia-divider"></div></div>',
-      TrainSection.render(),
-      Simuladores.render(),
-      Guias.render(),
-      AppShowcase.render(),
-      Publish.render(),
-      Library.render(),
-      SocialProof.render(),
-      Vision.render(),
-      About.render(),
-      EarlyAccess.render(),
+      safeRender("TrainSection", TrainSection.render),
+      safeRender("Simuladores", Simuladores.render),
+      safeRender("Guias", Guias.render),
+      safeRender("AppShowcase", AppShowcase.render),
+      safeRender("Publish", Publish.render),
+      safeRender("Features", Features.render),
+      safeRender("Library", Library.render),
+      safeRender("SocialProof", SocialProof.render),
+      safeRender("Vision", Vision.render),
+      safeRender("About", About.render),
+      safeRender("EarlyAccess", EarlyAccess.render),
       '</div>',
       '</main>',
-      Footer.render(),
+      safeRender("Footer", Footer.render),
     ].join('\n');
   }
 
