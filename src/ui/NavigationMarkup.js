@@ -7,9 +7,8 @@ export const NavigationMarkup = {
   render() {
     return /* html */ `
       <nav id="lia-nav" class="lia-nav" aria-label="Navegación principal">
-        <div class="lia-nav__inner">
-
-          <a href="#top" class="lia-nav__brand" aria-label="LIA-Tech · Inicio">
+        <div class="lia-nav__container">
+          <a href="#top" class="lia-nav__brand" aria-label="Volver al inicio">
             <span class="lia-nav__logo" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M4 20V4M20 20V4M4 12h16M12 4v16"/>
@@ -21,10 +20,9 @@ export const NavigationMarkup = {
           </a>
 
           <ul class="lia-nav__links" role="list">
-            <li><a href="#como-funciona" class="lia-nav__link lia-nav__link--active">Cómo funciona</a></li>
+            <li><a href="#lia-train" class="lia-nav__link">LIA Train</a></li>
+            <li><a href="#staylo" class="lia-nav__link">Staylo</a></li>
             <li><a href="#biblioteca" class="lia-nav__link">Biblioteca</a></li>
-            <li><a href="#vision" class="lia-nav__link">Visión</a></li>
-            <li><a href="#autor" class="lia-nav__link">El Proyecto</a></li>
           </ul>
 
           <div class="lia-nav__actions">

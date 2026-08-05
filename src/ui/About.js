@@ -5,7 +5,7 @@ export const About = {
         <div class="lia-container">
           <div class="lia-grid-2">
             <div class="lia-about__visual">
-              <img src="/public/images/manuscrito_tecnologia.png" alt="Manuscrito y Tecnología" style="width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);" />
+              <img src="/images/manuscrito_tecnologia.png" alt="Manuscrito y Tecnología" style="width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);" loading="lazy" />
             </div>
             <div class="lia-about__content">
               <h2 id="about-title" class="lia-h2" style="margin-bottom: var(--space-4);">Del manuscrito a la tecnología</h2>

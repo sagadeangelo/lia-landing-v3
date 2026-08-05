@@ -22,12 +22,16 @@ import { AnchorSmooth } from './anchor_smooth.js';
 import { CosmicBackground } from '../ui/CosmicBackground.js';
 import { Navigation } from '../ui/Navigation.js';
 import { NavigationMarkup } from '../ui/NavigationMarkup.js';
+import { CinematicIntro } from '../ui/CinematicIntro.js';
 import { Hero } from '../ui/Hero.js';
 import { HeroFX } from '../ui/HeroFX.js';
 import { Continuum } from '../ui/Continuum.js';
 import { ContinuumFX } from '../ui/ContinuumFX.js';
-import { Features } from '../ui/Features.js';
 import { TrainSection } from '../ui/TrainSection.js';
+import { Simuladores } from '../ui/Simuladores.js';
+import { Guias } from '../ui/Guias.js';
+import { Publish } from '../ui/Publish.js';
+import { Features } from '../ui/Features.js';
 import { Library } from '../ui/Library.js';
 import { SocialProof } from '../ui/SocialProof.js';
 import { Vision } from '../ui/Vision.js';
@@ -117,15 +121,18 @@ export class LIA_OS {
     if (!shell) throw new Error('[LIA_OS] #app-layer no encontrado en index.html.');
 
     shell.innerHTML = [
+      CinematicIntro.render(),
       NavigationMarkup.render(),
       '<main id="lia-main" class="lia-main" role="main">',
       Hero.render(),
       Continuum.render(),
       '<div style="padding-top: var(--space-4xl); position: relative; z-index: 10;">',
       '<div class="lia-container"><div class="lia-divider"></div></div>',
-      Features.render(),
       TrainSection.render(),
+      Simuladores.render(),
+      Guias.render(),
       AppShowcase.render(),
+      Publish.render(),
       Library.render(),
       SocialProof.render(),
       Vision.render(),

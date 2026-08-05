@@ -16,7 +16,7 @@
   gap: var(--lia-space-sm);
   height: 52px;
   padding-inline: 1.65rem;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   font-family: var(--lia-sans-display);
   font-size: 0.95rem;
   font-weight: 600;
@@ -100,10 +100,10 @@
 }
 
 .lia-btn--sm {
-  height: 42px;
-  padding-inline: 1.1rem;
+  height: 48px;
+  padding-inline: 1.25rem;
   font-size: 0.85rem;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 .lia-btn--sm svg {
@@ -164,5 +164,20 @@
 .lia-card__content {
   display: flex;
   flex-direction: column;
+}
+
+/* =========================================================
+   BOOK COVERS — Animaciones para Biblioteca
+   ========================================================= */
+.lia-book-cover {
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  transform: rotateY(-5deg) rotateX(5deg);
+}
+
+.lia-card:hover .lia-book-cover {
+  transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
