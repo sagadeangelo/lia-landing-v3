@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#030814" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>LIA-Tech · El Sistema Operativo Cognitivo</title>
+    <meta
+      name="description"
+      content="LIA es un ecosistema cognitivo de IA para potenciar el talento humano. Escribir, aprender, crear, encontrar empleo y vivir experiencias inmersivas — amplificado por inteligencia artificial."
+    />
+
+    <!-- Preconexiones críticas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Favicon / Social (placeholders conservados de scaffold) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- SEO OpenGraph básico (extender en Sprint dedicado) -->
+    <meta property="og:site_name" content="LIA-Tech" />
+    <meta property="og:title" content="LIA-Tech · El Sistema Operativo Cognitivo" />
+    <meta
+      property="og:description"
+      content="Ecosistema cognitivo de IA para potenciar el talento humano."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Anti-flash: establecer fondo void ANTES de que JS arranque -->
+    <style>
+      html,body{background:#030814;}
+      html,body,#app-layer{min-height:100%;}
+      #app-layer{position:relative;z-index:10;}
+    </style>
+  </head>
+  <body>
+    <!--
+      Capa 0: Fondo cósmico (WebGL futuro).
+      Se inyecta programáticamente por CosmicBackground para aislar responsabilidades.
+    -->
+
+    <!-- Capa 1: Interfaz DOM. El LIA_OS monta Nav + Main aquí. -->
+    <div id="app-layer"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

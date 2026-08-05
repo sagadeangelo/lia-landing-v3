@@ -1,0 +1,1151 @@
+/* =========================================================
+   HERO EXPERIENCE — Sprint 2 · Ecosistema VIVO
+   ---------------------------------------------------------
+   Principios de diseño:
+     · Toda capa respira en ciclo 9s sincronizado (ritmo cardiaco).
+     · Profundidad Z estratificada: 8 planos diferenciados.
+     · Nada salta. Todo fluye: lerp 0.06 vía RAF central de LIA_OS.
+     · Energy Surge cada 14s — pulso de vida del ecosistema.
+     · Intro cinemática 2.2s con reveal escalonado por capas.
+     · Chromatic aberration sutil durante surges (sub-perceptual).
+     · Prefers reduced motion → todo OFF por respeto WCAG.
+   ========================================================= */
+
+.lia-hero {
+  position: relative;
+  z-index: var(--lia-z-content);
+  perspective: 1800px;
+  perspective-origin: 50% 50%;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Intro veil: capa de revelación cinemática (negro puro → transparente) */
+.lia-hero__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: #000000;
+  pointer-events: none;
+  animation: lia-hero-veil 2.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  transform-origin: center;
+}
+
+.lia-hero__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--lia-space-3xl);
+  align-items: center;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* ========================= COPY ========================= */
+
+.lia-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lia-space-lg);
+  will-change: transform;
+  transform-style: preserve-3d;
+  position: relative;
+  z-index: 4;
+}
+
+/* Badge: reveal micro-pop 80ms delay sobre intro veil */
+.lia-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lia-space-sm);
+  width: fit-content;
+  padding: 0.4rem 0.9rem 0.4rem 0.5rem;
+  border-radius: 999px;
+  background: var(--lia-glass-bg);
+  border: 1px solid var(--lia-glass-border);
+  backdrop-filter: var(--lia-glass-blur-soft);
+  -webkit-backdrop-filter: var(--lia-glass-blur-soft);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.10) inset,
+    0 0 28px rgba(34, 211, 238, 0.08),
+    0 4px 24px rgba(0, 0, 0, 0.25);
+  transform: translateZ(0);
+  will-change: transform;
+  opacity: 0;
+  animation: lia-hero-pop var(--lia-dur-cinematic) var(--lia-ease-out-expo) forwards;
+  animation-delay: 1.32s;
+  position: relative;
+  overflow: visible;
+}
+
+/* Micro-sheen que recorre el badge cada 7s */
+.lia-hero__badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.14) 50%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+  animation: lia-hero-sheen 7s ease-in-out 3s infinite;
+  pointer-events: none;
+}
+
+.lia-hero__pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lia-neon-cyan-hi);
+  box-shadow: 0 0 14px var(--lia-glow-cyan);
+  position: relative;
+  flex-shrink: 0;
+  animation: lia-hero-core-pulse 6s ease-in-out 1.4s infinite;
+}
+
+.lia-hero__pulse::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(34, 211, 238, 0.55);
+  animation: lia-ping 2.2s cubic-bezier(0, 0, 0.2, 1) 1.6s infinite;
+}
+
+.lia-hero__badge-label {
+  font-family: var(--lia-mono);
+  font-size: 0.72rem;
+  letter-spacing: var(--lia-tracking-wide);
+  text-transform: uppercase;
+  color: var(--lia-text-primary);
+}
+
+/* Eyebrow mono + reveal 140ms tras badge */
+.lia-hero__eyebrow {
+  opacity: 0;
+  transform: translateZ(0);
+  animation: lia-hero-pop var(--lia-dur-cinematic) var(--lia-ease-out-expo) forwards;
+  animation-delay: 1.44s;
+}
+
+/* Title: reveal fuerte con escala sub-perceptual 1.018 → 1 + respiración sincronizada */
+.lia-hero__title {
+  font-family: var(--lia-sans-display);
+  font-size: var(--lia-font-display);
+  font-weight: 800;
+  line-height: var(--lia-leading-tight);
+  letter-spacing: var(--lia-tracking-tight);
+  color: var(--lia-text-white);
+  text-wrap: balance;
+  opacity: 0;
+  transform: translate3d(0, 26px, 0) scale(1.018);
+  animation:
+    lia-hero-title 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    lia-hero-title-breathe 9s ease-in-out 2.4s infinite;
+  animation-delay: 1.58s, 2.4s;
+  transform-origin: center top;
+  will-change: transform, opacity, filter;
+  filter:
+    drop-shadow(0 0 20px rgba(124, 58, 237, 0.10))
+    drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
+  position: relative;
+}
+
+.lia-hero__title em {
+  font-style: normal;
+  background: var(--lia-gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(168, 85, 247, 0.28));
+  position: relative;
+}
+
+/* Lead reveal */
+.lia-hero__lead {
+  max-width: 58ch;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  animation: lia-fade-up var(--lia-dur-cinematic) var(--lia-ease-out-expo) forwards;
+  animation-delay: 1.78s;
+}
+
+/* Actions row reveal */
+.lia-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lia-space-md);
+  margin-top: var(--lia-space-sm);
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  animation: lia-fade-up var(--lia-dur-cinematic) var(--lia-ease-out-expo) forwards;
+  animation-delay: 1.96s;
+  will-change: transform;
+}
+
+/* Meta stats reveal */
+.lia-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lia-space-lg);
+  margin-top: var(--lia-space-lg);
+  padding-top: var(--lia-space-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  animation: lia-fade-up var(--lia-dur-cinematic) var(--lia-ease-out-expo) forwards;
+  animation-delay: 2.12s;
+}
+
+.lia-hero__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lia-space-xs);
+  opacity: 0.92;
+  transition:
+    transform 380ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity var(--lia-dur-base),
+    filter 380ms cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+  padding: 0.4rem 0.1rem;
+  border-radius: 8px;
+  will-change: transform, filter;
+  position: relative;
+}
+
+.lia-hero__stat:hover {
+  transform: translateY(-4px) scale(1.02);
+  opacity: 1;
+  filter: drop-shadow(0 8px 24px rgba(124, 58, 237, 0.18));
+}
+
+/* Glow focal bajo stat al hacer hover (micro-sensation) */
+.lia-hero__stat::after {
+  content: '';
+  position: absolute;
+  inset: auto -0.8rem -0.6rem -0.8rem;
+  height: 40%;
+  background: radial-gradient(
+    ellipse at center top,
+    rgba(168, 85, 247, 0.0) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(6px) scale(0.8);
+  transition:
+    opacity 320ms var(--lia-ease-fluid),
+    transform 320ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    background 320ms;
+  pointer-events: none;
+}
+
+.lia-hero__stat:hover::after {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  background: radial-gradient(
+    ellipse at center top,
+    rgba(168, 85, 247, 0.22) 0%,
+    transparent 70%
+  );
+}
+
+.lia-hero__stat-value {
+  font-family: var(--lia-sans-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: var(--lia-tracking-tight);
+  color: var(--lia-text-white);
+  position: relative;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E9D5FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lia-hero__stat-label {
+  font-family: var(--lia-mono);
+  font-size: 0.72rem;
+  letter-spacing: var(--lia-tracking-wide);
+  text-transform: uppercase;
+  color: var(--lia-text-muted);
+}
+
+/* ======================= VISUAL / ECOSISTEMA VIVO ======================= */
+
+.lia-hero__visual {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 540px;
+  justify-self: end;
+  width: 100%;
+  transform-style: preserve-3d;
+  perspective: 2000px;
+  perspective-origin: 50% 50%;
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.96);
+  animation:
+    lia-hero-visual-in 1.35s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    lia-hero-float 11s ease-in-out 1.4s infinite;
+  animation-delay: 600ms, 1.4s;
+  will-change: transform, opacity, filter;
+  filter: drop-shadow(0 12px 54px rgba(0, 0, 0, 0.48));
+}
+
+/* =========================================================
+   CAPA 0 · AURA DUAL (más lejana) — halo volumétrico de 2 capas
+   ========================================================= */
+
+.lia-hero__aura {
+  position: absolute;
+  inset: -22%;
+  z-index: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  opacity: 0;
+  animation: lia-fade 1.4s ease-out 800ms forwards;
+}
+
+.lia-hero__aura-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.30) 0%, transparent 38%),
+    radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.18) 0%, transparent 54%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 72%);
+  filter: blur(52px) saturate(1.12);
+  mix-blend-mode: screen;
+  animation:
+    lia-hero-aura-core 9s ease-in-out 1.2s infinite,
+    lia-hero-aura-chromatic 14s ease-in-out 2s infinite;
+  will-change: transform, filter, opacity;
+}
+
+.lia-hero__aura-corona {
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 0, 225, 0.10) 0%, transparent 42%),
+    radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.07) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.04) 0%, transparent 78%);
+  filter: blur(80px) saturate(1.22);
+  mix-blend-mode: screen;
+  opacity: 0.78;
+  animation: lia-hero-aura-corona 9s ease-in-out 1.4s infinite;
+  will-change: transform, opacity;
+}
+
+/* =========================================================
+   CAPA 0.5 · ENERGY SHELL — campo de energía exterior pulsante
+   ========================================================= */
+
+.lia-hero__shell {
+  position: absolute;
+  inset: -4%;
+  z-index: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(168, 85, 247, 0.03);
+  box-shadow:
+    inset 0 0 0 1px rgba(34, 211, 238, 0.015),
+    0 0 60px rgba(124, 58, 237, 0.0);
+  opacity: 0;
+  transform: scale(0.99);
+  animation:
+    lia-fade 1.2s ease-out 1.1s forwards,
+    lia-hero-shell 9s ease-in-out 2s infinite,
+    lia-hero-shell-surge 14s ease-in-out 5s infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* =========================================================
+   CAPA 1 · TETHER — conexión lumínica desde fondo hasta núcleo
+   ========================================================= */
+
+.lia-hero__tether {
+  position: absolute;
+  left: 50%;
+  bottom: -36%;
+  width: 1px;
+  height: 62%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(124, 58, 237, 0.0) 18%,
+    rgba(34, 211, 238, 0.24) 58%,
+    rgba(168, 85, 247, 0.36) 82%,
+    rgba(233, 213, 255, 0.08) 100%
+  );
+  z-index: 1;
+  filter: blur(1px);
+  opacity: 0;
+  animation:
+    lia-fade 1.4s ease-out 1s forwards,
+    lia-hero-tether 6s ease-in-out 2.2s infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.lia-hero__tether::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  filter: blur(6px);
+  opacity: 0.42;
+  transform: scaleX(2.4);
+  transform-origin: center;
+}
+
+.lia-hero__tether::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: 3px;
+  height: 22%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.68) 0%,
+    rgba(168, 85, 247, 0.28) 50%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: lia-hero-tether-flow 4.8s linear 2.4s infinite;
+  mix-blend-mode: screen;
+}
+
+/* =========================================================
+   CAPA 2 · ORB ATMOSFÉRICO — cuerpo principal
+   ========================================================= */
+
+.lia-hero__orb {
+  position: absolute;
+  inset: 6%;
+  z-index: 2;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 26% 22%, rgba(255, 255, 255, 0.28) 0%, transparent 30%),
+    radial-gradient(circle at 74% 76%, var(--lia-neon-pink) 0%, transparent 44%),
+    radial-gradient(circle at 48% 58%, rgba(255, 0, 225, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, var(--lia-neon-purple) 0%, var(--lia-neon-cyan) 62%, transparent 86%);
+  box-shadow:
+    0 0 82px var(--lia-glow-purple),
+    0 0 180px rgba(6, 182, 212, 0.24),
+    0 0 360px rgba(124, 58, 237, 0.14),
+    inset 0 0 130px rgba(255, 255, 255, 0.07);
+  animation: lia-hero-orb-breath 9s ease-in-out 1s infinite;
+  overflow: hidden;
+  will-change: transform, filter, box-shadow;
+}
+
+/* Envmap especular simulado (capas de Fresnel) */
+.lia-hero__orb-envmap {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.42) 0%, transparent 18%),
+    radial-gradient(circle at 82% 10%, rgba(165, 243, 252, 0.18) 0%, transparent 24%),
+    radial-gradient(circle at 14% 86%, rgba(233, 213, 255, 0.18) 0%, transparent 28%),
+    radial-gradient(circle at 88% 82%, rgba(255, 255, 255, 0.10) 0%, transparent 22%),
+    radial-gradient(ellipse at 50% 100%, rgba(124, 58, 237, 0.32) 0%, transparent 60%);
+  mix-blend-mode: screen;
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+/* Grano interno del orb (cinematic noise · overlay) */
+.lia-hero__grain {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0.062;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.75 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 260px 260px;
+  pointer-events: none;
+  animation: lia-hero-grain-drift 24s linear infinite;
+}
+
+/* =========================================================
+   GLINTS ESPECULARES MÚLTIPLES (4) — luz errante sobre superficie
+   ========================================================= */
+
+.lia-hero__glint {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.70) 0%, transparent 72%);
+  filter: blur(5px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.lia-hero__glint--a {
+  top: 14%;
+  left: 20%;
+  width: 14%;
+  height: 8%;
+  animation: lia-hero-glint-a 19s ease-in-out infinite;
+  opacity: 0.58;
+}
+.lia-hero__glint--b {
+  top: 38%;
+  right: 14%;
+  width: 9%;
+  height: 6%;
+  background: radial-gradient(circle at 50% 50%, rgba(165, 243, 252, 0.70) 0%, transparent 72%);
+  animation: lia-hero-glint-b 23s ease-in-out 2s infinite;
+  opacity: 0.46;
+}
+.lia-hero__glint--c {
+  bottom: 20%;
+  left: 28%;
+  width: 10%;
+  height: 7%;
+  background: radial-gradient(circle at 50% 50%, rgba(233, 213, 255, 0.66) 0%, transparent 72%);
+  animation: lia-hero-glint-c 29s ease-in-out 4s infinite;
+  opacity: 0.40;
+}
+.lia-hero__glint--d {
+  top: 60%;
+  left: 58%;
+  width: 7%;
+  height: 4%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.58) 0%, transparent 72%);
+  animation: lia-hero-glint-d 17s ease-in-out 1s infinite;
+  opacity: 0.34;
+}
+
+/* =========================================================
+   CAPA 3 · ANILLOS (3) — rotación diferenciada + profundidad Z
+   ========================================================= */
+
+/* Anillo exterior — horario lento · Z: -16px */
+.lia-hero__ring--outer {
+  position: absolute;
+  inset: 0%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 0 0 1px rgba(124, 58, 237, 0.025) inset,
+    0 0 34px rgba(124, 58, 237, 0.06);
+  z-index: 3;
+  opacity: 0;
+  animation:
+    lia-hero-ring-fade 1.5s ease-out 900ms forwards,
+    lia-hero-ring-outer 26s linear 2s infinite;
+  transform: rotate(var(--lia-rot-outer, 0deg));
+  will-change: transform, opacity;
+}
+
+.lia-hero__ring--outer::before,
+.lia-hero__ring--outer::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  will-change: box-shadow;
+}
+.lia-hero__ring--outer::before {
+  left: -4.5px;
+  background: var(--lia-neon-cyan-hi);
+  box-shadow: 0 0 14px var(--lia-glow-cyan);
+}
+.lia-hero__ring--outer::after {
+  right: -4.5px;
+  background: var(--lia-neon-pink-hi);
+  box-shadow: 0 0 14px var(--lia-glow-pink);
+}
+
+/* Anillo medio — anti-horario medio · Z: -4px */
+.lia-hero__ring--mid {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  border: 1px dashed rgba(165, 243, 252, 0.07);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.02) inset,
+    0 0 22px rgba(34, 211, 238, 0.04);
+  z-index: 4;
+  opacity: 0;
+  animation:
+    lia-hero-ring-fade 1.5s ease-out 1.1s forwards,
+    lia-hero-ring-mid 21s linear 2s infinite reverse;
+  transform: rotate(var(--lia-rot-mid, 0deg));
+  will-change: transform, opacity;
+}
+
+.lia-hero__ring--mid::before,
+.lia-hero__ring--mid::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.lia-hero__ring--mid::before {
+  left: -3px;
+  background: var(--lia-neon-green);
+  box-shadow: 0 0 11px rgba(39, 201, 63, 0.45);
+}
+.lia-hero__ring--mid::after {
+  right: -3px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 0 11px rgba(255, 255, 255, 0.36);
+}
+
+/* Anillo interior — horario rápido · Z: +10px */
+.lia-hero__ring--inner {
+  position: absolute;
+  inset: 24%;
+  border-radius: 50%;
+  border: 1px solid rgba(233, 213, 255, 0.07);
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.03) inset,
+    0 0 17px rgba(168, 85, 247, 0.06);
+  z-index: 5;
+  opacity: 0;
+  animation:
+    lia-hero-ring-fade 1.5s ease-out 1.3s forwards,
+    lia-hero-ring-inner 14s linear 2s infinite;
+  transform: rotate(var(--lia-rot-inner, 0deg));
+  will-change: transform, opacity;
+}
+
+.lia-hero__ring--inner::before,
+.lia-hero__ring--inner::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.lia-hero__ring--inner::before {
+  left: -2.5px;
+  background: var(--lia-neon-purple-hi);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.52);
+}
+.lia-hero__ring--inner::after {
+  right: -2.5px;
+  background: var(--lia-neon-cyan-hi);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.48);
+}
+
+/* =========================================================
+   CAPA 4 · ORBITERS (6) — satélites con órbitas elípticas individuales
+   ========================================================= */
+
+.lia-hero__orbiters {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.lia-hero__orbiter {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  will-change: transform, opacity, box-shadow;
+  opacity: 0;
+  animation:
+    lia-hero-orbiter-in 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.lia-hero__orbiter--1 {
+  background: var(--lia-neon-cyan-hi);
+  box-shadow: 0 0 10px var(--lia-glow-cyan), 0 0 20px rgba(34, 211, 238, 0.22);
+  animation-delay: 1.6s;
+}
+.lia-hero__orbiter--2 {
+  width: 5px;
+  height: 5px;
+  background: var(--lia-neon-pink-hi);
+  box-shadow: 0 0 9px var(--lia-glow-pink), 0 0 17px rgba(255, 0, 225, 0.18);
+  animation-delay: 1.8s;
+}
+.lia-hero__orbiter--3 {
+  width: 4px;
+  height: 4px;
+  background: var(--lia-neon-green);
+  box-shadow: 0 0 7px rgba(39, 201, 63, 0.38);
+  animation-delay: 2.0s;
+}
+.lia-hero__orbiter--4 {
+  width: 6px;
+  height: 6px;
+  background: var(--lia-neon-purple-hi);
+  box-shadow: 0 0 11px rgba(168, 85, 247, 0.46), 0 0 22px rgba(168, 85, 247, 0.16);
+  animation-delay: 2.2s;
+}
+.lia-hero__orbiter--5 {
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.38);
+  animation-delay: 2.4s;
+}
+.lia-hero__orbiter--6 {
+  width: 5px;
+  height: 5px;
+  background: #FDE68A;
+  box-shadow: 0 0 8px rgba(253, 230, 138, 0.38);
+  animation-delay: 2.6s;
+}
+
+/* =========================================================
+   CAPA 5 · CORE / CHISPA CENTRAL — más cercana al usuario
+   ========================================================= */
+
+.lia-hero__core {
+  position: absolute;
+  inset: 30%;
+  z-index: 7;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 32% 30%,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(233, 213, 255, 0.52) 24%,
+    rgba(124, 58, 237, 0.30) 58%,
+    transparent 80%
+  );
+  box-shadow:
+    0 0 64px rgba(255, 255, 255, 0.26),
+    0 0 130px rgba(124, 58, 237, 0.40),
+    0 0 260px rgba(168, 85, 247, 0.15);
+  animation:
+    lia-hero-core-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s both,
+    lia-hero-core-pulse 6s ease-in-out 2.1s infinite,
+    lia-hero-core-surge 14s ease-in-out 5.4s infinite;
+  opacity: 0;
+  overflow: hidden;
+  will-change: transform, filter, box-shadow;
+}
+
+.lia-hero__core-shine {
+  position: absolute;
+  top: -44%;
+  left: -44%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.44) 0%, transparent 46%);
+  transform: rotate(30deg);
+  animation: lia-hero-core-shine 8s ease-in-out 1.6s infinite;
+  pointer-events: none;
+}
+
+/* Flare secundario del core que aparece durante energy surges */
+.lia-hero__core-flare {
+  position: absolute;
+  inset: -20%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(165, 243, 252, 0.0) 0%,
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: lia-hero-core-flare 14s ease-in-out 5.2s infinite;
+  will-change: opacity, transform, background;
+}
+
+/* =========================================================
+   CAPA 6 · SPOTLIGHT — sigue al puntero (HeroFX controla t/o)
+   ========================================================= */
+
+.lia-hero__spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 360px;
+  height: 360px;
+  z-index: 8;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    rgba(168, 85, 247, 0.13) 0%,
+    rgba(34, 211, 238, 0.07) 32%,
+    transparent 68%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 320ms var(--lia-ease-fluid);
+  filter: blur(24px);
+  will-change: transform, opacity;
+}
+
+/* ======================= KEYFRAMES ======================= */
+
+/* --- Intro veil --- */
+@keyframes lia-hero-veil {
+  0%   { opacity: 1; }
+  55%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* --- Pop/fade universales --- */
+@keyframes lia-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lia-fade-up {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes lia-ping {
+  75%, 100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes lia-hero-pop {
+  0%   { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.94); }
+  65%  { transform: translate3d(0, -1px, 0) scale(1.018); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* --- Sheen en badge --- */
+@keyframes lia-hero-sheen {
+  0%, 65%  { left: -100%; opacity: 0; }
+  70%      { opacity: 1; }
+  85%      { left: 140%; opacity: 1; }
+  86%, 100%{ left: 140%; opacity: 0; }
+}
+
+/* --- Título --- */
+@keyframes lia-hero-title {
+  0%   { opacity: 0; transform: translate3d(0, 26px, 0) scale(1.018); filter: blur(6px) drop-shadow(0 0 20px rgba(124, 58, 237, 0.10)); }
+  55%  { filter: blur(1px) drop-shadow(0 0 24px rgba(124, 58, 237, 0.16)); }
+  65%  { transform: translate3d(0, -3px, 0) scale(1.003); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0) drop-shadow(0 0 20px rgba(124, 58, 237, 0.10)); }
+}
+
+@keyframes lia-hero-title-breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.10)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
+    transform: translateY(0);
+  }
+  50% {
+    filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.22)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
+    transform: translateY(-1.8px);
+  }
+}
+
+/* --- Visual (contenedor orb completo) --- */
+@keyframes lia-hero-visual-in {
+  0%   { opacity: 0; transform: translate3d(0, 28px, 0) scale(0.95); filter: blur(10px) drop-shadow(0 16px 64px rgba(0, 0, 0, 0.55)); }
+  55%  { opacity: 0.92; filter: blur(1px) drop-shadow(0 16px 64px rgba(0, 0, 0, 0.55)); }
+  65%  { transform: translate3d(0, -5px, 0) scale(1.012); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0) drop-shadow(0 16px 64px rgba(0, 0, 0, 0.55)); }
+}
+
+@keyframes lia-hero-float {
+  0%, 100% { translate: 0 0; rotate: 0.14deg; }
+  50%      { translate: 0 -10px; rotate: -0.22deg; }
+}
+
+/* --- Aura dual --- */
+@keyframes lia-hero-aura-core {
+  0%, 100% { opacity: 0.88; filter: blur(52px) saturate(1.12); transform: scale(1); }
+  50%      { opacity: 0.96;   filter: blur(58px) saturate(1.22); transform: scale(1.032); }
+}
+@keyframes lia-hero-aura-corona {
+  0%, 100% { opacity: 0.72; filter: blur(80px) saturate(1.22); transform: scale(1); }
+  50%      { opacity: 0.88;    filter: blur(88px) saturate(1.32); transform: scale(1.036); }
+}
+@keyframes lia-hero-aura-chromatic {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(-0.38px, 0.22px, 0); }
+  50%      { transform: translate3d(0.26px, -0.32px, 0); }
+  75%      { transform: translate3d(-0.20px, 0.38px, 0); }
+}
+
+/* --- Energy shell --- */
+@keyframes lia-hero-shell {
+  0%, 100% {
+    opacity: 0.82;
+    transform: scale(0.993);
+    border-color: rgba(168, 85, 247, 0.03);
+    box-shadow:
+      inset 0 0 0 1px rgba(34, 211, 238, 0.015),
+      0 0 52px rgba(124, 58, 237, 0.028);
+  }
+  50% {
+    opacity: 0.94;
+    transform: scale(1.009);
+    border-color: rgba(168, 85, 247, 0.055);
+    box-shadow:
+      inset 0 0 0 1px rgba(34, 211, 238, 0.03),
+      0 0 84px rgba(124, 58, 237, 0.065);
+  }
+}
+
+@keyframes lia-hero-shell-surge {
+  0%, 58%, 72%, 100% {
+    border-color: rgba(168, 85, 247, var(--shell-surge-border, 0.03));
+    box-shadow:
+      inset 0 0 0 1px rgba(34, 211, 238, var(--shell-surge-inset, 0.015)),
+      0 0 52px rgba(124, 58, 237, var(--shell-surge-glow, 0.028));
+  }
+  64% {
+    border-color: rgba(168, 85, 247, 0.26);
+    box-shadow:
+      inset 0 0 0 1px rgba(34, 211, 238, 0.14),
+      0 0 144px rgba(124, 58, 237, 0.21),
+      0 0 276px rgba(34, 211, 238, 0.12);
+  }
+}
+
+/* --- Tether / conexión --- */
+@keyframes lia-hero-tether {
+  0%, 100% { opacity: 0.42; filter: blur(1px) brightness(1); }
+  50%      { opacity: 0.72; filter: blur(0.6px) brightness(1.16); }
+}
+@keyframes lia-hero-tether-flow {
+  0%   { transform: translateX(-50%) translateY(360%) scaleY(0.52); opacity: 0; }
+  20%  { opacity: 0.82; }
+  80%  { opacity: 0.82; }
+  100% { transform: translateX(-50%) translateY(-360%) scaleY(1); opacity: 0; }
+}
+
+/* --- Orb / atmósfera --- */
+@keyframes lia-hero-orb-breath {
+  0%, 100% {
+    transform: scale(0.992);
+    filter: blur(1.5px) brightness(1) saturate(1);
+    box-shadow:
+      0 0 82px var(--lia-glow-purple),
+      0 0 180px rgba(6, 182, 212, 0.24),
+      0 0 360px rgba(124, 58, 237, 0.14),
+      inset 0 0 130px rgba(255, 255, 255, 0.07);
+  }
+  50% {
+    transform: scale(1.012);
+    filter: blur(2.0px) brightness(1.08) saturate(1.07);
+    box-shadow:
+      0 0 118px var(--lia-glow-purple),
+      0 0 240px rgba(6, 182, 212, 0.32),
+      0 0 460px rgba(124, 58, 237, 0.20),
+      inset 0 0 156px rgba(255, 255, 255, 0.10);
+  }
+}
+
+@keyframes lia-hero-grain-drift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 520px 520px; }
+}
+
+/* --- Glints errantes (traslados ~×0.65, scales ×0.65) --- */
+@keyframes lia-hero-glint-a {
+  0%, 100% { transform: translate(0, 0) scale(1);        opacity: 0.58; }
+  22%      { transform: translate(28px, 16px) scale(1.10); opacity: 0.76; }
+  48%      { transform: translate(8px, 38px) scale(0.88); opacity: 0.40; }
+  74%      { transform: translate(-21px, 12px) scale(1.04); opacity: 0.64; }
+}
+@keyframes lia-hero-glint-b {
+  0%, 100% { transform: translate(0, 0) scale(1);        opacity: 0.46; }
+  26%      { transform: translate(-20px, 21px) scale(1.06); opacity: 0.62; }
+  52%      { transform: translate(-10px, -27px) scale(0.82); opacity: 0.33; }
+  78%      { transform: translate(17px, -12px) scale(1.02); opacity: 0.54; }
+}
+@keyframes lia-hero-glint-c {
+  0%, 100% { transform: translate(0, 0) scale(1);        opacity: 0.40; }
+  30%      { transform: translate(23px, -18px) scale(1.14); opacity: 0.58; }
+  58%      { transform: translate(-16px, -34px) scale(0.86); opacity: 0.30; }
+  82%      { transform: translate(-5px, 18px) scale(1.06); opacity: 0.50; }
+}
+@keyframes lia-hero-glint-d {
+  0%, 100% { transform: translate(0, 0) scale(1);        opacity: 0.34; }
+  22%      { transform: translate(-18px, -10px) scale(0.88); opacity: 0.24; }
+  54%      { transform: translate(21px, -22px) scale(1.20); opacity: 0.60; }
+  80%      { transform: translate(-8px, 16px) scale(0.97); opacity: 0.44; }
+}
+
+/* --- Anillos --- */
+@keyframes lia-hero-ring-fade {
+  from { opacity: 0; scale: 1.07; }
+  to   { opacity: 1; scale: 1; }
+}
+@keyframes lia-hero-ring-outer {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes lia-hero-ring-mid {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes lia-hero-ring-inner {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* --- Orbiters (seis órbitas elípticas diferenciadas) --- */
+@keyframes lia-hero-orbiter-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* --- Core --- */
+@keyframes lia-hero-core-in {
+  0%   { opacity: 0; transform: scale(0.48) translate3d(0, 10px, 0); filter: blur(7px); }
+  62%  { transform: scale(1.08) translate3d(0, -3px, 0); opacity: 1; filter: blur(0.4px); }
+  82%  { transform: scale(0.982); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+@keyframes lia-hero-core-pulse {
+  0%, 100% { transform: scale(1);     filter: brightness(1); }
+  50%      { transform: scale(1.05); filter: brightness(1.14); }
+}
+
+@keyframes lia-hero-core-surge {
+  0%, 58%, 72%, 100% {
+    box-shadow:
+      0 0 64px rgba(255, 255, 255, 0.26),
+      0 0 130px rgba(124, 58, 237, 0.40),
+      0 0 260px rgba(168, 85, 247, 0.15);
+    filter: brightness(1);
+  }
+  62%, 66% {
+    box-shadow:
+      0 0 112px rgba(255, 255, 255, 0.52),
+      0 0 256px rgba(124, 58, 237, 0.58),
+      0 0 480px rgba(34, 211, 238, 0.26),
+      0 0 800px rgba(168, 85, 247, 0.12);
+    filter: brightness(1.28);
+  }
+}
+
+@keyframes lia-hero-core-shine {
+  0%, 100% { transform: translateX(0) translateY(0) rotate(30deg);   opacity: 0.80; }
+  50%      { transform: translateX(10%) translateY(9%) rotate(33deg); opacity: 0.62; }
+}
+
+@keyframes lia-hero-core-flare {
+  0%, 58%, 72%, 100% {
+    opacity: 0;
+    transform: scale(0.68);
+    background: radial-gradient(circle at 50% 50%, rgba(165, 243, 252, 0.0) 0%, transparent 60%);
+  }
+  62%, 66% {
+    opacity: 0.68;
+    transform: scale(1.22);
+    background: radial-gradient(circle at 50% 50%, rgba(165, 243, 252, 0.32) 0%, rgba(168, 85, 247, 0.14) 42%, transparent 72%);
+  }
+}
+
+/* ======================= REDUCED MOTION ======================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .lia-hero__veil { animation-duration: 0.5s; }
+  .lia-hero__aura,
+  .lia-hero__aura-core,
+  .lia-hero__aura-corona,
+  .lia-hero__shell,
+  .lia-hero__tether,
+  .lia-hero__tether::after,
+  .lia-hero__orb,
+  .lia-hero__orb-envmap,
+  .lia-hero__grain,
+  .lia-hero__glint,
+  .lia-hero__ring,
+  .lia-hero__orbiter,
+  .lia-hero__core,
+  .lia-hero__core-shine,
+  .lia-hero__core-flare,
+  .lia-hero__pulse,
+  .lia-hero__pulse::after,
+  .lia-hero__visual,
+  .lia-hero__title,
+  .lia-hero__badge,
+  .lia-hero__badge::before,
+  .lia-hero__eyebrow,
+  .lia-hero__lead,
+  .lia-hero__actions,
+  .lia-hero__meta {
+    animation: none !important;
+  }
+  .lia-hero__veil,
+  .lia-hero__visual,
+  .lia-hero__aura,
+  .lia-hero__shell,
+  .lia-hero__tether,
+  .lia-hero__badge,
+  .lia-hero__eyebrow,
+  .lia-hero__title,
+  .lia-hero__lead,
+  .lia-hero__actions,
+  .lia-hero__meta,
+  .lia-hero__ring,
+  .lia-hero__orbiter,
+  .lia-hero__core {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .lia-hero__spotlight { display: none !important; }
+}
+
+/* ======================= RESPONSIVE ======================= */
+
+@media (max-width: 1024px) {
+  .lia-hero__grid {
+    grid-template-columns: 1fr;
+    gap: var(--lia-space-2xl);
+  }
+
+  .lia-hero__visual {
+    justify-self: center;
+    max-width: 440px;
+    margin-top: var(--lia-space-xl);
+  }
+
+  .lia-hero__spotlight {
+    width: 340px;
+    height: 340px;
+  }
+}
+
+@media (max-width: 640px) {
+  .lia-hero__meta {
+    gap: var(--lia-space-md);
+    padding-top: var(--lia-space-md);
+  }
+
+  .lia-hero__stat-value {
+    font-size: 1.32rem;
+  }
+
+  .lia-hero__visual {
+    max-width: 88vw;
+  }
+
+  .lia-hero__spotlight {
+    width: 240px;
+    height: 240px;
+  }
+
+  .lia-hero__tether { display: none; }
+}

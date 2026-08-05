@@ -1,0 +1,121 @@
+/* 
+ * LIA OS — Continuum Module Styles
+ * Sprint 3: "La Revelación"
+ * 
+ * Flujo continuo sin contenedores rígidos.
+ * Revelación progresiva de los nodos del ecosistema.
+ */
+
+.lia-continuum {
+  position: relative;
+  width: 100%;
+  color: var(--lia-color-text);
+  /* Espacio de transición desde el Hero */
+  padding-top: 15vh;
+  padding-bottom: 20vh;
+}
+
+.lia-node {
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding-block: var(--lia-space-4xl);
+}
+
+/* Espaciado narrativo masivo para sentir el viaje */
+.lia-node + .lia-node {
+  margin-top: 25vh;
+}
+
+.lia-node__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+/* 1. La Función (Lo que el usuario descubre primero) */
+.lia-node__function {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  color: var(--lia-color-text-muted);
+  max-width: 900px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--lia-space-3xl);
+}
+
+.lia-node__function em {
+  color: var(--lia-color-text);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* 2. La Identidad (El nombre que asimilan después) */
+.lia-node__identity {
+  font-family: var(--lia-font-mono);
+  font-size: var(--lia-text-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lia-space-sm);
+  color: var(--lia-color-text-muted);
+  opacity: 0.6;
+  margin-top: auto; /* Empuja la identidad hacia abajo */
+}
+
+.lia-node__identity::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+/* 
+ * Abstract visual background for each node 
+ * Volumetric light simulation without breaking flow
+ */
+.lia-node__visual {
+  position: absolute;
+  top: 50%;
+  right: -10%;
+  transform: translateY(-50%);
+  width: 70vw;
+  height: 70vw;
+  max-width: 800px;
+  max-height: 800px;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.4;
+  transition: opacity 0.8s ease;
+}
+
+/* Distinct light signatures for the nodes */
+.lia-node--platform .lia-node__visual {
+  background: radial-gradient(circle at center, rgba(165, 243, 252, 0.08) 0%, transparent 70%);
+}
+
+.lia-node--employx .lia-node__visual {
+  background: radial-gradient(circle at center, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+}
+
+.lia-node--train .lia-node__visual {
+  background: radial-gradient(circle at center, rgba(52, 211, 153, 0.06) 0%, transparent 70%);
+}
+
+.lia-node--staylo .lia-node__visual {
+  background: radial-gradient(circle at center, rgba(251, 191, 36, 0.06) 0%, transparent 70%);
+}
+
+.lia-node--publish .lia-node__visual {
+  background: radial-gradient(circle at center, rgba(244, 114, 182, 0.06) 0%, transparent 70%);
+}

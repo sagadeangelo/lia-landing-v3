@@ -1,0 +1,81 @@
+.lia-display {
+  font-family: var(--lia-sans-display);
+  font-size: var(--lia-font-display);
+  font-weight: 800;
+  line-height: var(--lia-leading-tight);
+  letter-spacing: var(--lia-tracking-tight);
+  color: var(--lia-text-white);
+}
+
+h1, .lia-h1 {
+  font-size: var(--lia-font-h1);
+  font-weight: 700;
+  line-height: var(--lia-leading-tight);
+  letter-spacing: var(--lia-tracking-tight);
+}
+
+h2, .lia-h2 {
+  font-size: var(--lia-font-h2);
+  font-weight: 700;
+  line-height: var(--lia-leading-snug);
+  letter-spacing: var(--lia-tracking-semi);
+}
+
+h3, .lia-h3 {
+  font-size: var(--lia-font-h3);
+  font-weight: 600;
+  line-height: var(--lia-leading-snug);
+  letter-spacing: var(--lia-tracking-semi);
+}
+
+.lia-lead {
+  font-size: var(--lia-font-lead);
+  line-height: 1.5;
+  color: var(--lia-text-secondary);
+  font-weight: 400;
+  max-width: 62ch;
+}
+
+.lia-body {
+  font-size: var(--lia-font-body);
+  line-height: var(--lia-leading-normal);
+  color: var(--lia-text-secondary);
+}
+
+.lia-small {
+  font-size: var(--lia-font-small);
+  line-height: 1.5;
+  color: var(--lia-text-muted);
+}
+
+.lia-mono {
+  font-family: var(--lia-mono);
+  font-size: var(--lia-font-mono);
+  letter-spacing: 0.02em;
+  color: var(--lia-text-secondary);
+}
+
+.lia-eyebrow {
+  font-family: var(--lia-mono);
+  font-size: var(--lia-font-small);
+  letter-spacing: var(--lia-tracking-wide);
+  text-transform: uppercase;
+  color: var(--lia-neon-cyan-hi);
+  font-weight: 500;
+}
+
+.lia-gradient-text {
+  background: var(--lia-gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.lia-text-balance {
+  text-wrap: balance;
+}
+
+.lia-text-pretty {
+  text-wrap: pretty;
+}

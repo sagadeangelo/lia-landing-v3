@@ -1,0 +1,140 @@
+/* =========================================================
+   COMPONENTS — Botones, tarjetas y utilidades interactivas
+   Sprint 1: CTA primario, CTA secundario, chip, badge
+   ========================================================= */
+
+.lia-btn {
+  --btn-bg: var(--lia-gradient-cta);
+  --btn-fg: #FFFFFF;
+  --btn-bg-hover: var(--btn-bg);
+  --btn-border: transparent;
+  --btn-shadow: 0 10px 40px -10px rgba(124, 58, 237, 0.55);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lia-space-sm);
+  height: 52px;
+  padding-inline: 1.65rem;
+  border-radius: 14px;
+  font-family: var(--lia-sans-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  box-shadow: var(--btn-shadow);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform var(--lia-dur-base) var(--lia-ease-spring),
+    box-shadow var(--lia-dur-base) var(--lia-ease-fluid),
+    background-color var(--lia-dur-base) var(--lia-ease-fluid),
+    border-color var(--lia-dur-base) var(--lia-ease-fluid),
+    color var(--lia-dur-base) var(--lia-ease-fluid);
+}
+
+.lia-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.lia-btn:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow:
+    0 14px 56px -10px rgba(124, 58, 237, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.lia-btn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.lia-btn:focus-visible {
+  outline: 2px solid var(--lia-neon-cyan-hi);
+  outline-offset: 3px;
+}
+
+.lia-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.lia-btn--primary {
+  /* Hereda defaults */
+}
+
+.lia-btn--secondary {
+  --btn-bg: var(--lia-glass-bg);
+  --btn-bg-hover: var(--lia-glass-bg-hover);
+  --btn-border: var(--lia-glass-border);
+  --btn-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  backdrop-filter: var(--lia-glass-blur-soft);
+  -webkit-backdrop-filter: var(--lia-glass-blur-soft);
+}
+
+.lia-btn--secondary:hover {
+  background: var(--lia-glass-bg-hover);
+  border-color: var(--lia-glass-border-hover);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.lia-btn--sm {
+  height: 42px;
+  padding-inline: 1.1rem;
+  font-size: 0.85rem;
+  border-radius: 12px;
+}
+
+.lia-btn--sm svg {
+  width: 16px;
+  height: 16px;
+}
+
+.lia-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lia-space-xs);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  color: var(--lia-neon-cyan-hi);
+  font-family: var(--lia-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  backdrop-filter: var(--lia-glass-blur-soft);
+  -webkit-backdrop-filter: var(--lia-glass-blur-soft);
+}
+
+.lia-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  margin-block: var(--lia-space-xl);
+}

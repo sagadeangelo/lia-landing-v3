@@ -1,0 +1,43 @@
+/* =========================================================
+   R4: Placeholder sections — estética minimal "pending"
+   ========================================================= */
+
+.lia-placeholder {
+  padding-block: var(--lia-space-3xl);
+}
+
+.lia-placeholder__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lia-space-md);
+  align-items: center;
+  text-align: center;
+  padding: var(--lia-space-2xl);
+  border-radius: 20px;
+  background: var(--lia-glass-bg);
+  border: 1px solid var(--lia-glass-border);
+  backdrop-filter: var(--lia-glass-blur-soft);
+  -webkit-backdrop-filter: var(--lia-glass-blur-soft);
+  box-shadow: var(--lia-glass-shadow);
+}
+
+.lia-placeholder__eyebrow {
+  color: var(--lia-text-muted);
+  opacity: 0.9;
+}
+
+.lia-placeholder__title {
+  color: var(--lia-text-primary);
+  max-width: 28ch;
+  text-wrap: balance;
+}
+
+.lia-placeholder__copy {
+  color: var(--lia-text-muted);
+  max-width: 52ch;
+}
+
+/* Estilo especial para nodo móvil hidden (R3 a11y placeholder) */
+.lia-mobile-menu[hidden] {
+  display: none !important;
+}

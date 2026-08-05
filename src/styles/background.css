@@ -1,0 +1,312 @@
+/* =========================================================
+   COSMIC BACKGROUND — Sistema de iluminación atmosférica
+   Sprint 2: Fondo void + 3 luces volumétricas drift + Hero focus light
+   Capa WebGL vendrá en sprints posteriores.
+   ========================================================= */
+
+.lia-bg {
+  position: fixed;
+  inset: 0;
+  z-index: var(--lia-z-bg);
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: var(--lia-bg-void-deep);
+}
+
+.lia-bg__void {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 82% 62% at 50% 14%,
+      var(--lia-bg-void) 0%,
+      var(--lia-bg-void-deep) 72%,
+      #000000 100%
+    );
+}
+
+.lia-bg__lights {
+  position: absolute;
+  inset: -10%;
+  z-index: var(--lia-z-bg-glow);
+  filter: blur(84px) saturate(1.18);
+  opacity: 0.92;
+}
+
+.lia-bg__light {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.lia-bg__light--purple {
+  width: 58vw;
+  height: 58vw;
+  top: -18vw;
+  left: -12vw;
+  background: radial-gradient(
+    circle,
+    var(--lia-glow-purple) 0%,
+    transparent 62%
+  );
+  animation: lia-drift-purple 30s ease-in-out infinite alternate;
+}
+
+.lia-bg__light--cyan {
+  width: 52vw;
+  height: 52vw;
+  top: 8vw;
+  right: -10vw;
+  background: radial-gradient(
+    circle,
+    var(--lia-glow-cyan) 0%,
+    transparent 62%
+  );
+  animation: lia-drift-cyan 36s ease-in-out infinite alternate;
+}
+
+.lia-bg__light--pink {
+  width: 44vw;
+  height: 44vw;
+  bottom: -14vw;
+  left: 30%;
+  background: radial-gradient(
+    circle,
+    var(--lia-glow-pink) 0%,
+    transparent 62%
+  );
+  animation: lia-drift-pink 42s ease-in-out infinite alternate;
+}
+
+/* =========================================================
+   LUZ FOCALIZADA EN HERO — "fuente de energía" del ecosistema
+   Sincroniza 9s con respiración del orb, 14s con energy surge.
+   Bloom proyecta una fuente de luz primaria sobre la zona del hero.
+   ========================================================= */
+
+.lia-bg__hero-focus {
+  position: absolute;
+  left: 64%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 86vh;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(168, 85, 247, 0.0) 0%,
+    rgba(124, 58, 237, 0.0) 45%,
+    transparent 78%
+  );
+  filter: blur(30px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation:
+    lia-bg-hero-focus-in 2.2s cubic-bezier(0.65, 0, 0.35, 1) 600ms forwards,
+    lia-bg-hero-focus-breathe 9s ease-in-out 2.8s infinite,
+    lia-bg-hero-focus-surge 14s ease-in-out 5.6s infinite;
+  will-change: transform, opacity, background;
+}
+
+.lia-bg__bloom {
+  position: absolute;
+  top: 20%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+  width: 72vw;
+  height: 48vh;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.072) 0%,
+    rgba(124, 58, 237, 0.05) 32%,
+    transparent 74%
+  );
+  filter: blur(44px);
+  mix-blend-mode: screen;
+  animation:
+    lia-bg-bloom-breathe 9s ease-in-out 2.2s infinite,
+    lia-bg-bloom-surge 14s ease-in-out 5.4s infinite;
+  will-change: transform, opacity, filter, background;
+}
+
+.lia-bg__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 100% 68% at 50% 0%,
+    transparent 48%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+  z-index: 2;
+}
+
+.lia-bg__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0.042;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+  mix-blend-mode: overlay;
+  animation: lia-bg-grain-shift 18s steps(36) infinite;
+}
+
+@keyframes lia-drift-purple {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(7vw, 5vw, 0) scale(1.10); }
+  100% { transform: translate3d(2vw, -4vw, 0) scale(0.94); }
+}
+
+@keyframes lia-drift-cyan {
+  0%   { transform: translate3d(0, 0, 0) scale(0.98); }
+  50%  { transform: translate3d(-6vw, 6vw, 0) scale(1.06); }
+  100% { transform: translate3d(-2vw, -2vw, 0) scale(1.03); }
+}
+
+@keyframes lia-drift-pink {
+  0%   { transform: translate3d(0, 0, 0) scale(1.03); }
+  50%  { transform: translate3d(-5vw, -7vw, 0) scale(0.92); }
+  100% { transform: translate3d(5vw, 2vw, 0) scale(1.08); }
+}
+
+/* Hero focus light (foco en zona visual del hero) */
+@keyframes lia-bg-hero-focus-in {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes lia-bg-hero-focus-breathe {
+  0%, 100% {
+    background: radial-gradient(
+      ellipse at center,
+      rgba(168, 85, 247, 0.085) 0%,
+      rgba(124, 58, 237, 0.055) 45%,
+      transparent 78%
+    );
+    transform: translate(-50%, -50%) scale(0.99);
+  }
+  50% {
+    background: radial-gradient(
+      ellipse at center,
+      rgba(168, 85, 247, 0.14) 0%,
+      rgba(124, 58, 237, 0.085) 45%,
+      transparent 78%
+    );
+    transform: translate(-50%, -50%) scale(1.03);
+  }
+}
+
+@keyframes lia-bg-hero-focus-surge {
+  0%, 58%, 72%, 100% {
+    background: radial-gradient(
+      ellipse at center,
+      rgba(168, 85, 247, var(--hero-focus-a, 0.085)) 0%,
+      rgba(34, 211, 238, 0.03) 24%,
+      rgba(124, 58, 237, var(--hero-focus-b, 0.055)) 45%,
+      transparent 78%
+    );
+    filter: blur(30px);
+  }
+  62%, 66% {
+    background: radial-gradient(
+      ellipse at center,
+      rgba(165, 243, 252, 0.22) 0%,
+      rgba(168, 85, 247, 0.16) 22%,
+      rgba(34, 211, 238, 0.11) 46%,
+      transparent 82%
+    );
+    filter: blur(22px);
+  }
+}
+
+/* Bloom sincronizado */
+@keyframes lia-bg-bloom-breathe {
+  0%, 100% {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) scale(0.99);
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.072) 0%,
+      rgba(124, 58, 237, 0.05) 32%,
+      transparent 74%
+    );
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.04);
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.10) 0%,
+      rgba(124, 58, 237, 0.072) 32%,
+      transparent 74%
+    );
+  }
+}
+
+@keyframes lia-bg-bloom-surge {
+  0%, 58%, 72%, 100% {
+    opacity: 0.92;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.072) 0%,
+      rgba(124, 58, 237, 0.05) 32%,
+      transparent 74%
+    );
+    filter: blur(44px);
+  }
+  62%, 66% {
+    opacity: 1;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(165, 243, 252, 0.10) 18%,
+      rgba(124, 58, 237, 0.092) 34%,
+      transparent 76%
+    );
+    filter: blur(32px);
+  }
+}
+
+@keyframes lia-bg-grain-shift {
+  0%   { background-position: 0 0; }
+  25%  { background-position: 120px 60px; }
+  50%  { background-position: -60px 180px; }
+  75%  { background-position: 180px -120px; }
+  100% { background-position: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lia-bg__light,
+  .lia-bg__hero-focus,
+  .lia-bg__bloom,
+  .lia-bg__grain {
+    animation: none;
+  }
+  .lia-bg__hero-focus,
+  .lia-bg__bloom { opacity: 1; }
+}
+
+/* Responsive: hero focus se centra menos en desktop-small / mobile */
+@media (max-width: 1024px) {
+  .lia-bg__hero-focus {
+    left: 50%;
+    top: 62%;
+    width: 92vw;
+    height: 70vh;
+  }
+  .lia-bg__bloom {
+    left: 50%;
+    top: 30%;
+    width: 86vw;
+    height: 40vh;
+  }
+}
+@media (max-width: 640px) {
+  .lia-bg__hero-focus { display: none; }
+}
