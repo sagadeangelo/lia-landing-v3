@@ -19,7 +19,7 @@ export const Guias = {
                 <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-secondary)">✔</span> Acceso offline y multiplataforma</li>
               </ul>
               <div class="lia-actions">
-                <a href="#comprar" class="lia-btn lia-btn--secondary">Adquirir Guía</a>
+                <a href="#" class="lia-btn lia-btn--secondary" data-modal data-modal-title="Guías de Estudio" data-modal-desc="Las guías de estudio estarán disponibles próximamente." data-modal-icon="📖">📖 Adquirir Guía</a>
               </div>
             </div>
           </div>

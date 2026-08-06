@@ -1,0 +1,518 @@
+﻿diff --git a/src/core/LIA_OS.js b/src/core/LIA_OS.js
+index 4378ae8..1517256 100644
+--- a/src/core/LIA_OS.js
++++ b/src/core/LIA_OS.js
+@@ -22,12 +22,16 @@ import { AnchorSmooth } from './anchor_smooth.js';
+ import { CosmicBackground } from '../ui/CosmicBackground.js';
+ import { Navigation } from '../ui/Navigation.js';
+ import { NavigationMarkup } from '../ui/NavigationMarkup.js';
++import { CinematicIntro } from '../ui/CinematicIntro.js';
+ import { Hero } from '../ui/Hero.js';
+ import { HeroFX } from '../ui/HeroFX.js';
+ import { Continuum } from '../ui/Continuum.js';
+ import { ContinuumFX } from '../ui/ContinuumFX.js';
+-import { Features } from '../ui/Features.js';
+ import { TrainSection } from '../ui/TrainSection.js';
++import { Simuladores } from '../ui/Simuladores.js';
++import { Guias } from '../ui/Guias.js';
++import { Publish } from '../ui/Publish.js';
++import { Features } from '../ui/Features.js';
+ import { Library } from '../ui/Library.js';
+ import { SocialProof } from '../ui/SocialProof.js';
+ import { Vision } from '../ui/Vision.js';
+@@ -65,10 +69,50 @@ export class LIA_OS {
+     this._bootStarted = performance.now();
+     this._log('BootingΓÇª');
+ 
+-    this._mountLayout();
+-    this._registerCoreModules();
+-    this._registerUIModules();
+-    this._startRAFLoop();
++    console.group("LIA BOOT");
++
++    console.time("_mountLayout");
++    try {
++      this._mountLayout();
++      CinematicIntro.init();
++      console.log("OK _mountLayout");
++    } catch(e) {
++      console.error("_mountLayout", e);
++      throw e;
++    }
++    console.timeEnd("_mountLayout");
++
++    console.time("_registerCoreModules");
++    try {
++      this._registerCoreModules();
++      console.log("OK _registerCoreModules");
++    } catch(e) {
++      console.error("_registerCoreModules", e);
++      throw e;
++    }
++    console.timeEnd("_registerCoreModules");
++
++    console.time("_registerUIModules");
++    try {
++      this._registerUIModules();
++      console.log("OK _registerUIModules");
++    } catch(e) {
++      console.error("_registerUIModules", e);
++      throw e;
++    }
++    console.timeEnd("_registerUIModules");
++
++    console.time("_startRAFLoop");
++    try {
++      this._startRAFLoop();
++      console.log("OK _startRAFLoop");
++    } catch(e) {
++      console.error("_startRAFLoop", e);
++      throw e;
++    }
++    console.timeEnd("_startRAFLoop");
++
++    console.groupEnd();
+ 
+     this._booted = true;
+     this._log(`Boot OK ┬╖ ${Math.round(performance.now() - this._bootStarted)}ms`);
+@@ -97,6 +141,7 @@ export class LIA_OS {
+    * @param {{ raf?: (t:number)=>void, destroy?: ()=>void, active?: boolean }} instance
+    */
+   register(name, instance) {
++    console.log(`Register: ${name}`);
+     this.modules.set(name, instance);
+     return instance;
+   }
+@@ -116,24 +161,37 @@ export class LIA_OS {
+     const shell = document.getElementById('app-layer');
+     if (!shell) throw new Error('[LIA_OS] #app-layer no encontrado en index.html.');
+ 
++    const safeRender = (name, renderFn) => {
++      try {
++        return renderFn();
++      } catch (e) {
++        console.error(`ERROR EN ${name}`, e);
++        return `<div style="color:red; padding: 20px;">ERROR EN ${name}: ${e.message}</div>`;
++      }
++    };
++
+     shell.innerHTML = [
+-      NavigationMarkup.render(),
++      safeRender("CinematicIntro", CinematicIntro.render),
++      safeRender("NavigationMarkup", NavigationMarkup.render),
+       '<main id="lia-main" class="lia-main" role="main">',
+-      Hero.render(),
+-      Continuum.render(),
++      safeRender("Hero", Hero.render),
++      safeRender("Continuum", Continuum.render),
+       '<div style="padding-top: var(--space-4xl); position: relative; z-index: 10;">',
+       '<div class="lia-container"><div class="lia-divider"></div></div>',
+-      Features.render(),
+-      TrainSection.render(),
+-      AppShowcase.render(),
+-      Library.render(),
+-      SocialProof.render(),
+-      Vision.render(),
+-      About.render(),
+-      EarlyAccess.render(),
++      safeRender("TrainSection", TrainSection.render),
++      safeRender("Simuladores", Simuladores.render),
++      safeRender("Guias", Guias.render),
++      safeRender("AppShowcase", AppShowcase.render),
++      safeRender("Publish", Publish.render),
++      safeRender("Features", Features.render),
++      safeRender("Library", Library.render),
++      safeRender("SocialProof", SocialProof.render),
++      safeRender("Vision", Vision.render),
++      safeRender("About", About.render),
++      safeRender("EarlyAccess", EarlyAccess.render),
+       '</div>',
+       '</main>',
+-      Footer.render(),
++      safeRender("Footer", Footer.render),
+     ].join('\n');
+   }
+ 
+diff --git a/src/ui/Guias.js b/src/ui/Guias.js
+new file mode 100644
+index 0000000..3bcb7db
+--- /dev/null
++++ b/src/ui/Guias.js
+@@ -0,0 +1,36 @@
++export const Guias = {
++  render() {
++    return /* html */ `
++      <section id="guias" class="lia-section" aria-labelledby="guias-title" style="background: rgba(255,255,255,0.01);">
++        <div class="lia-container">
++          <div class="lia-grid-2">
++            <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">
++              <div style="font-size: 4rem; margin-bottom: var(--space-4);">≡ƒôÜ</div>
++              <h3 class="lia-h4">Gu├¡as Premium</h3>
++              <p class="lia-body lia-text-muted">Desarrolladas por expertos EGEL</p>
++            </div>
++            <div class="lia-stack lia-stack--lg">
++              <div class="lia-eyebrow">Paso 2: Prep├írate</div>
++              <h2 id="guias-title" class="lia-h2">Gu├¡as de Estudio LIA</h2>
++              <p class="lia-lead">Una vez que conoces tus debilidades, at├ícalas con el material de estudio m├ís preciso del mercado.</p>
++              <ul class="lia-list" style="list-style: none; padding: 0;">
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-secondary)">Γ£ö</span> Res├║menes ejecutivos</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-secondary)">Γ£ö</span> Ejercicios resueltos paso a paso</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-secondary)">Γ£ö</span> Acceso offline y multiplataforma</li>
++              </ul>
++              <div class="lia-actions">
++                <a href="#comprar" class="lia-btn lia-btn--secondary">Adquirir Gu├¡a</a>
++              </div>
++            </div>
++          </div>
++          <div style="text-align: center; margin-top: var(--space-2xl);">
++             <a href="#ecosistema" class="lia-body" style="color: var(--text-muted); text-decoration: underline; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
++                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
++                Volver al ecosistema
++             </a>
++          </div>
++        </div>
++      </section>
++    `;
++  }
++};
+diff --git a/src/ui/Library.js b/src/ui/Library.js
+index eb3fc90..0bf6356 100644
+--- a/src/ui/Library.js
++++ b/src/ui/Library.js
+@@ -2,48 +2,110 @@ export const Library = {
+   render() {
+     return /* html */ `
+       <section id="biblioteca" class="lia-section lia-library" aria-labelledby="library-title">
++        <style>
++          .lia-book-container {
++            width: 100%;
++            max-width: 220px;
++            margin-bottom: var(--space-6);
++            perspective: 1200px;
++          }
++          .lia-book-cover {
++            width: 100%;
++            height: auto;
++            border-radius: 4px 8px 8px 4px;
++            box-shadow: 
++              inset 4px 0 10px rgba(0,0,0,0.1),
++              inset -1px 0 2px rgba(255,255,255,0.3),
++              5px 5px 15px rgba(0,0,0,0.3),
++              15px 15px 30px rgba(0,0,0,0.1);
++            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
++            transform-origin: center left;
++            transform: rotateY(-15deg);
++          }
++          .lia-book-container:hover .lia-book-cover {
++            transform: rotateY(-5deg) scale(1.05);
++            box-shadow: 
++              inset 4px 0 10px rgba(0,0,0,0.1),
++              inset -1px 0 2px rgba(255,255,255,0.4),
++              8px 12px 25px rgba(0,0,0,0.4),
++              20px 25px 40px rgba(0,0,0,0.2);
++          }
++          .lia-library-card {
++            display: flex;
++            flex-direction: column;
++            align-items: center;
++            text-align: center;
++            padding: var(--space-6);
++            background: rgba(255,255,255,0.01);
++            border: 1px solid rgba(255,255,255,0.03);
++            border-radius: var(--radius-lg);
++            transition: background 0.3s ease, border-color 0.3s ease;
++          }
++          .lia-library-card:hover {
++            background: rgba(255,255,255,0.03);
++            border-color: rgba(255,255,255,0.08);
++          }
++        </style>
+         <div class="lia-container">
+-          <div class="lia-section__header">
+-            <h2 id="library-title" class="lia-h2">Explora historias creadas dentro de LIA</h2>
+-            <p class="lia-lead">Historias reales, creadas por autores. LIA solo acelera el proceso.</p>
++          <div class="lia-centered" style="margin-bottom: var(--space-4xl);">
++            <div class="lia-eyebrow">La Saga Original</div>
++            <h2 id="library-title" class="lia-h2" style="margin-bottom: var(--space-4);">El origen de LIA</h2>
++            <p class="lia-lead" style="max-width: 600px;">
++              Antes de ser un ecosistema tecnol├│gico, LIA naci├│ como una saga de novelas de ciencia ficci├│n. Conoce la historia que lo empez├│ todo.
++            </p>
+           </div>
+-
+-          <div class="lia-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6);">
++          
++          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-8);">
++            
+             <!-- Libro 1 -->
+-            <article class="lia-card lia-card--glow">
+-              <img src="/public/images/LIBRO1_PORTADA_PSD.png" alt="├üngelo & El Proyecto Dit├│x" style="width: 100%; border-radius: var(--radius-md); margin-bottom: var(--space-4);" />
+-              <div class="lia-card__content">
+-                <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-3);">
+-                  <span class="lia-chip" style="font-size: 0.75rem;">Sci-Fi / Thriller</span>
+-                </div>
+-                <h3 class="lia-h4">├üngelo & El Proyecto Dit├│x</h3>
+-                <p class="lia-body">Un thriller de ciencia ficci├│n donde ├üngelo enfrenta una conspiraci├│n global.</p>
++            <div class="lia-library-card lia-card--glow">
++              <div class="lia-book-container">
++                <img src="/images/LIBRO1_PORTADA_PSD.png" alt="├üngelo & El Proyecto Dit├│x" class="lia-book-cover" loading="lazy" />
++              </div>
++              <h3 class="lia-h4" style="margin-bottom: var(--space-2);">├üngelo & El Proyecto Dit├│x</h3>
++              <p class="lia-body lia-text-muted" style="margin-bottom: var(--space-6); flex-grow: 1;">El inicio de la aventura en un mundo dominado por megacorporaciones y tecnolog├¡a prohibida.</p>
++              <div class="lia-stack lia-stack--sm" style="width: 100%;">
++                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary">Comprar Kindle</a>
++                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary">Comprar Pasta Blanda</a>
++                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;">Leer muestra</a>
+               </div>
+-            </article>
++            </div>
+ 
+             <!-- Libro 2 -->
+-            <article class="lia-card lia-card--glow">
+-              <img src="/public/images/LIBRO2_PORTADA_PSD.png" alt="├üngelo & Los Gadianes" style="width: 100%; border-radius: var(--radius-md); margin-bottom: var(--space-4);" />
+-              <div class="lia-card__content">
+-                <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-3);">
+-                  <span class="lia-chip" style="font-size: 0.75rem;">Fantas├¡a ├⌐pica</span>
+-                </div>
+-                <h3 class="lia-h4">├üngelo & Los Gadianes</h3>
+-                <p class="lia-body">Una guerra secreta entre razas alien├¡genas y humanos, el legado ancestral.</p>
++            <div class="lia-library-card lia-card--glow">
++              <div class="lia-book-container">
++                <img src="/images/LIBRO2_PORTADA_PSD.png" alt="├üngelo & Los Guardianes de la Historia" class="lia-book-cover" loading="lazy" />
++              </div>
++              <h3 class="lia-h4" style="margin-bottom: var(--space-2);">├üngelo & Los Guardianes</h3>
++              <p class="lia-body lia-text-muted" style="margin-bottom: var(--space-6); flex-grow: 1;">La continuaci├│n que expande el universo hacia secretos ancestrales y nuevas amenazas.</p>
++              <div class="lia-stack lia-stack--sm" style="width: 100%;">
++                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary">Comprar Kindle</a>
++                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary">Comprar Pasta Blanda</a>
++                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;">Leer muestra</a>
+               </div>
+-            </article>
++            </div>
+ 
+             <!-- Libro 3 -->
+-            <article class="lia-card lia-card--glow">
+-              <img src="/public/images/LIBRO3_PORTADA_PSD.png" alt="├üngelo & Los Artefactos Misteriosos" style="width: 100%; border-radius: var(--radius-md); margin-bottom: var(--space-4);" />
+-              <div class="lia-card__content">
+-                <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-3);">
+-                  <span class="lia-chip" style="font-size: 0.75rem;">Aventura c├│smica</span>
+-                </div>
+-                <h3 class="lia-h4">├üngelo & Los Artefactos Misteriosos</h3>
+-                <p class="lia-body">Una traves├¡a peligrosa en busca de artefactos c├│smicos que cambiar├ín el planeta.</p>
++            <div class="lia-library-card lia-card--glow">
++              <div class="lia-book-container">
++                <img src="/images/LIBRO3_PORTADA_PSD.png" alt="├üngelo & Los Artefactos Misteriosos" class="lia-book-cover" loading="lazy" />
+               </div>
+-            </article>
++              <h3 class="lia-h4" style="margin-bottom: var(--space-2);">├üngelo & Los Artefactos</h3>
++              <p class="lia-body lia-text-muted" style="margin-bottom: var(--space-6); flex-grow: 1;">El cierre ├⌐pico de la trilog├¡a original, donde todo el misterio se resuelve.</p>
++              <div class="lia-stack lia-stack--sm" style="width: 100%;">
++                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary">Comprar Kindle</a>
++                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary">Comprar Pasta Blanda</a>
++                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;">Leer muestra</a>
++              </div>
++            </div>
++
++          </div>
++          
++          <div style="text-align: center; margin-top: var(--space-4xl);">
++             <a href="#top" class="lia-body" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s ease;">
++                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
++                Volver al inicio
++             </a>
+           </div>
+         </div>
+       </section>
+diff --git a/src/ui/NavigationMarkup.js b/src/ui/NavigationMarkup.js
+index 5b6c27c..644027b 100644
+--- a/src/ui/NavigationMarkup.js
++++ b/src/ui/NavigationMarkup.js
+@@ -8,8 +8,7 @@ export const NavigationMarkup = {
+     return /* html */ `
+       <nav id="lia-nav" class="lia-nav" aria-label="Navegaci├│n principal">
+         <div class="lia-nav__inner">
+-
+-          <a href="#top" class="lia-nav__brand" aria-label="LIA-Tech ┬╖ Inicio">
++          <a href="#top" class="lia-nav__brand" aria-label="Volver al inicio">
+             <span class="lia-nav__logo" aria-hidden="true">
+               <svg viewBox="0 0 24 24">
+                 <path d="M4 20V4M20 20V4M4 12h16M12 4v16"/>
+@@ -21,10 +20,9 @@ export const NavigationMarkup = {
+           </a>
+ 
+           <ul class="lia-nav__links" role="list">
+-            <li><a href="#como-funciona" class="lia-nav__link lia-nav__link--active">C├│mo funciona</a></li>
++            <li><a href="#lia-train" class="lia-nav__link">LIA Train</a></li>
++            <li><a href="#staylo" class="lia-nav__link">Staylo</a></li>
+             <li><a href="#biblioteca" class="lia-nav__link">Biblioteca</a></li>
+-            <li><a href="#vision" class="lia-nav__link">Visi├│n</a></li>
+-            <li><a href="#autor" class="lia-nav__link">El Proyecto</a></li>
+           </ul>
+ 
+           <div class="lia-nav__actions">
+diff --git a/src/ui/Publish.js b/src/ui/Publish.js
+new file mode 100644
+index 0000000..c49cb64
+--- /dev/null
++++ b/src/ui/Publish.js
+@@ -0,0 +1,36 @@
++export const Publish = {
++  render() {
++    return /* html */ `
++      <section id="publish" class="lia-section" aria-labelledby="publish-title">
++        <div class="lia-container">
++          <div class="lia-grid-2">
++            <div class="lia-stack lia-stack--lg">
++              <div class="lia-eyebrow">LIA Publish</div>
++              <h2 id="publish-title" class="lia-h2">Publica sin fricci├│n</h2>
++              <p class="lia-lead">Llevamos tu obra maestra desde el manuscrito hasta las manos de tus lectores, en digital y papel.</p>
++              <ul class="lia-list" style="list-style: none; padding: 0;">
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Correcci├│n de estilo con IA</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Maquetaci├│n KDP (Amazon)</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Dise├▒o de portadas y branding</li>
++              </ul>
++              <div class="lia-actions">
++                <a href="#servicios" class="lia-btn lia-btn--primary">Ver Servicios Editoriales</a>
++              </div>
++            </div>
++            <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">
++              <div style="font-size: 4rem; margin-bottom: var(--space-4);">≡ƒÜÇ</div>
++              <h3 class="lia-h4">Tu legado</h3>
++              <p class="lia-body lia-text-muted">Distribuci├│n global instant├ínea</p>
++            </div>
++          </div>
++          <div style="text-align: center; margin-top: var(--space-2xl);">
++             <a href="#ecosistema" class="lia-body" style="color: var(--text-muted); text-decoration: underline; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
++                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
++                Volver al ecosistema
++             </a>
++          </div>
++        </div>
++      </section>
++    `;
++  }
++};
+diff --git a/src/ui/Simuladores.js b/src/ui/Simuladores.js
+new file mode 100644
+index 0000000..255cb4a
+--- /dev/null
++++ b/src/ui/Simuladores.js
+@@ -0,0 +1,36 @@
++export const Simuladores = {
++  render() {
++    return /* html */ `
++      <section id="simuladores" class="lia-section" aria-labelledby="simuladores-title">
++        <div class="lia-container">
++          <div class="lia-grid-2">
++            <div class="lia-stack lia-stack--lg">
++              <div class="lia-eyebrow">Paso 1: Eval├║ate</div>
++              <h2 id="simuladores-title" class="lia-h2">Simulador EGEL</h2>
++              <p class="lia-lead">Mide tus conocimientos en tiempo real bajo las mismas condiciones del examen CENEVAL.</p>
++              <ul class="lia-list" style="list-style: none; padding: 0;">
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Preguntas actualizadas 2026</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Temporizador oficial</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Resultados por ├írea</li>
++              </ul>
++              <div class="lia-actions">
++                <a href="#simulador" class="lia-btn lia-btn--primary">Iniciar Simulador Gratis</a>
++              </div>
++            </div>
++            <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">
++              <div style="font-size: 4rem; margin-bottom: var(--space-4);">ΓÅ▒∩╕Å</div>
++              <h3 class="lia-h4">┬┐Pasar├¡as hoy?</h3>
++              <p class="lia-body lia-text-muted">Desc├║brelo en menos de 60 minutos</p>
++            </div>
++          </div>
++          <div style="text-align: center; margin-top: var(--space-2xl);">
++             <a href="#ecosistema" class="lia-body" style="color: var(--text-muted); text-decoration: underline; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
++                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
++                Volver al ecosistema
++             </a>
++          </div>
++        </div>
++      </section>
++    `;
++  }
++};
+diff --git a/src/ui/TrainSection.js b/src/ui/TrainSection.js
+index a0f2e33..1fd1ae6 100644
+--- a/src/ui/TrainSection.js
++++ b/src/ui/TrainSection.js
+@@ -3,28 +3,58 @@ export const TrainSection = {
+     return /* html */ `
+       <section id="lia-train" class="lia-section lia-train" aria-labelledby="train-title">
+         <div class="lia-container">
+-          <div class="lia-grid-2">
+-            <div class="lia-train__content">
+-              <div class="lia-eyebrow">ΓÜí Nuevo en el ecosistema LIA</div>
+-              <h2 id="train-title" class="lia-h2" style="margin-bottom: var(--space-4);">┬┐Pasar├¡as tu examen profesional hoy?</h2>
+-              <p class="lia-lead" style="margin-bottom: var(--space-4);">
+-                Eval├║a tu nivel real con un simulador basado en el EGEL.<br>
+-                Sin filtros. Sin ayudas. Como el examen de verdad.
+-              </p>
+-              <ul class="lia-list" style="margin-bottom: var(--space-6); list-style: none; padding: 0;">
+-                <li style="margin-bottom: var(--space-2);">Γ£ö Sin registro</li>
+-                <li style="margin-bottom: var(--space-2);">Γ£ö Resultado inmediato</li>
+-                <li style="margin-bottom: var(--space-2);">Γ£ö Basado en examen real</li>
+-              </ul>
+-              <div class="lia-actions">
+-                <a href="https://lia-tech.com/train" class="lia-btn lia-btn--primary">Descubre si pasar├¡as hoy</a>
+-              </div>
++          <!-- Product Hero -->
++          <div class="lia-centered" style="margin-bottom: var(--space-4xl); padding: var(--space-4xl) 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
++            <div class="lia-eyebrow" style="color: var(--accent-primary); letter-spacing: 0.1em; font-weight: 600;">LIA TRAIN</div>
++            <h2 id="train-title" class="lia-h1" style="margin-bottom: var(--space-6); font-size: clamp(2.5rem, 5vw, 4.5rem); max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.1;">
++              Aqu├¡ es donde aseguras tu futuro profesional.
++            </h2>
++            <p class="lia-lead" style="max-width: 600px; margin: 0 auto var(--space-8) auto; color: var(--text-muted); font-size: 1.25rem;">
++              El ecosistema de preparaci├│n EGEL m├ís avanzado. Simuladores en tiempo real, gu├¡as estructuradas y an├ílisis de precisi├│n. No dejes tu t├¡tulo al azar.
++            </p>
++            <div class="lia-stack lia-stack--sm" style="justify-content: center;">
++              <a href="#comprar" class="lia-btn lia-btn--primary" style="font-size: 1.1rem; padding: 1rem 2rem; border-radius: 50px; font-weight: 600;">Comprar ahora</a>
+             </div>
+-            <div class="lia-train__visual" style="background: var(--surface-2); padding: var(--space-8); border-radius: var(--radius-lg); text-align: center; border: 1px solid var(--border-subtle);">
+-              <div style="font-size: 3rem; margin-bottom: var(--space-4);">ΓÜí</div>
+-              <h3 class="lia-h4">Tu reto de hoy</h3>
+-              <p class="lia-body lia-text-muted">Resultados en menos de 60 segundos</p>
++          </div>
++          
++          <!-- Features Elegantes -->
++          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-8); margin-bottom: var(--space-4xl);">
++            
++            <div style="padding: var(--space-6); background: rgba(255,255,255,0.01); border-left: 1px solid rgba(255,255,255,0.05);">
++              <h3 class="lia-h4" style="margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2);">
++                <span style="color: var(--accent-primary);">ΓÜí</span> Simulador
++              </h3>
++              <p class="lia-body lia-text-muted">Mide tus conocimientos bajo condiciones reales de examen. Descubre tu puntaje antes del gran d├¡a.</p>
++            </div>
++
++            <div style="padding: var(--space-6); background: rgba(255,255,255,0.01); border-left: 1px solid rgba(255,255,255,0.05);">
++              <h3 class="lia-h4" style="margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2);">
++                <span style="color: var(--accent-primary);">≡ƒôè</span> Resultados
++              </h3>
++              <p class="lia-body lia-text-muted">Reportes de precisi├│n por ├írea. Identifica exactamente qu├⌐ temas debes repasar para aprobar.</p>
++            </div>
++
++            <div style="padding: var(--space-6); background: rgba(255,255,255,0.01); border-left: 1px solid rgba(255,255,255,0.05);">
++              <h3 class="lia-h4" style="margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2);">
++                <span style="color: var(--accent-primary);">≡ƒôû</span> Gu├¡a
++              </h3>
++              <p class="lia-body lia-text-muted">Temarios 100% actualizados y bibliograf├¡a estructurada para tu carrera. Todo en un solo lugar.</p>
+             </div>
++
++            <div style="padding: var(--space-6); background: rgba(255,255,255,0.01); border-left: 1px solid rgba(255,255,255,0.05);">
++              <h3 class="lia-h4" style="margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2);">
++                <span style="color: var(--accent-primary);">≡ƒÅå</span> Casos de ├ëxito
++              </h3>
++              <p class="lia-body lia-text-muted">├Ünete a cientos de estudiantes que ya aseguraron su t├¡tulo universitario entrenando con LIA.</p>
++            </div>
++
++          </div>
++          
++          <div style="text-align: center; margin-top: var(--space-4xl);">
++             <a href="#top" class="lia-body" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s ease;">
++                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
++                Volver al inicio
++             </a>
+           </div>
+         </div>
+       </section>

@@ -1,0 +1,48 @@
+﻿commit 81aa45e3f9e6b9f597d270ff8b0994de34cb7e51
+Author: SagaDeAngelo <miguel.tovar.amaral@gmail.com>
+Date:   Wed Aug 5 08:45:55 2026 -0500
+
+    feat(sprint4.5): premium commercial polish
+
+diff --git a/src/ui/Guias.js b/src/ui/Guias.js
+new file mode 100644
+index 0000000..3bcb7db
+--- /dev/null
++++ b/src/ui/Guias.js
+@@ -0,0 +1,36 @@
++export const Guias = {
++  render() {
++    return /* html */ `
++      <section id="guias" class="lia-section" aria-labelledby="guias-title" style="background: rgba(255,255,255,0.01);">
++        <div class="lia-container">
++          <div class="lia-grid-2">
++            <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">
++              <div style="font-size: 4rem; margin-bottom: var(--space-4);">≡ƒôÜ</div>
++              <h3 class="lia-h4">Gu├¡as Premium</h3>
++              <p class="lia-body lia-text-muted">Desarrolladas por expertos EGEL</p>
++            </div>
++            <div class="lia-stack lia-stack--lg">
++              <div class="lia-eyebrow">Paso 2: Prep├írate</div>
++              <h2 id="guias-title" class="lia-h2">Gu├¡as de Estudio LIA</h2>
++              <p class="lia-lead">Una vez que conoces tus debilidades, at├ícalas con el material de estudio m├ís preciso del mercado.</p>
++              <ul class="lia-list" style="list-style: none; padding: 0;">
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-secondary)">Γ£ö</span> Res├║menes ejecutivos</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-secondary)">Γ£ö</span> Ejercicios resueltos paso a paso</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-secondary)">Γ£ö</span> Acceso offline y multiplataforma</li>
++              </ul>
++              <div class="lia-actions">
++                <a href="#comprar" class="lia-btn lia-btn--secondary">Adquirir Gu├¡a</a>
++              </div>
++            </div>
++          </div>
++          <div style="text-align: center; margin-top: var(--space-2xl);">
++             <a href="#ecosistema" class="lia-body" style="color: var(--text-muted); text-decoration: underline; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
++                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
++                Volver al ecosistema
++             </a>
++          </div>
++        </div>
++      </section>
++    `;
++  }
++};

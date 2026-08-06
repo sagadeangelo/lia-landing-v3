@@ -14,7 +14,7 @@ export const Publish = {
                 <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">✔</span> Diseño de portadas y branding</li>
               </ul>
               <div class="lia-actions">
-                <a href="#servicios" class="lia-btn lia-btn--primary">Ver Servicios Editoriales</a>
+                <a href="#" class="lia-btn lia-btn--primary" data-modal data-modal-title="Servicios Editoriales" data-modal-desc="Los servicios editoriales de LIA Publish estarán disponibles próximamente." data-modal-icon="🚀">🚀 Ver Servicios Editoriales</a>
               </div>
             </div>
             <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">

@@ -14,7 +14,7 @@ export const Simuladores = {
                 <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">✔</span> Resultados por área</li>
               </ul>
               <div class="lia-actions">
-                <a href="#simulador" class="lia-btn lia-btn--primary">Iniciar Simulador Gratis</a>
+                <a href="#" class="lia-btn lia-btn--primary" data-modal data-modal-title="Simulador EGEL" data-modal-desc="El simulador en tiempo real estará disponible próximamente." data-modal-icon="🧪">🧪 Iniciar Simulador Gratis</a>
               </div>
             </div>
             <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">

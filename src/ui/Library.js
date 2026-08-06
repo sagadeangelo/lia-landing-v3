@@ -65,9 +65,9 @@ export const Library = {
               <h3 class="lia-h4" style="margin-bottom: var(--space-2);">Ángelo & El Proyecto Ditóx</h3>
               <p class="lia-body lia-text-muted" style="margin-bottom: var(--space-6); flex-grow: 1;">El inicio de la aventura en un mundo dominado por megacorporaciones y tecnología prohibida.</p>
               <div class="lia-stack lia-stack--sm" style="width: 100%;">
-                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary">Comprar Kindle</a>
-                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary">Comprar Pasta Blanda</a>
-                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;">Leer muestra</a>
+                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary" data-modal data-modal-title="Amazon Kindle" data-modal-desc="📚 Próximamente disponible en Amazon Kindle." data-modal-icon="📚">📚 Comprar Kindle</a>
+                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary" data-modal data-modal-title="Amazon (Pasta Blanda)" data-modal-desc="Próximamente disponible en formato físico." data-modal-icon="📚">📚 Comprar Pasta Blanda</a>
+                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;" data-modal data-modal-title="Muestra Gratuita" data-modal-desc="El primer capítulo estará disponible muy pronto." data-modal-icon="📖">📖 Leer muestra</a>
               </div>
             </div>
 
@@ -79,9 +79,9 @@ export const Library = {
               <h3 class="lia-h4" style="margin-bottom: var(--space-2);">Ángelo & Los Guardianes</h3>
               <p class="lia-body lia-text-muted" style="margin-bottom: var(--space-6); flex-grow: 1;">La continuación que expande el universo hacia secretos ancestrales y nuevas amenazas.</p>
               <div class="lia-stack lia-stack--sm" style="width: 100%;">
-                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary">Comprar Kindle</a>
-                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary">Comprar Pasta Blanda</a>
-                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;">Leer muestra</a>
+                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary" data-modal data-modal-title="Amazon Kindle" data-modal-desc="📚 Próximamente disponible en Amazon Kindle." data-modal-icon="📚">📚 Comprar Kindle</a>
+                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary" data-modal data-modal-title="Amazon (Pasta Blanda)" data-modal-desc="Próximamente disponible en formato físico." data-modal-icon="📚">📚 Comprar Pasta Blanda</a>
+                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;" data-modal data-modal-title="Muestra Gratuita" data-modal-desc="El primer capítulo estará disponible muy pronto." data-modal-icon="📖">📖 Leer muestra</a>
               </div>
             </div>
 
@@ -93,9 +93,9 @@ export const Library = {
               <h3 class="lia-h4" style="margin-bottom: var(--space-2);">Ángelo & Los Artefactos</h3>
               <p class="lia-body lia-text-muted" style="margin-bottom: var(--space-6); flex-grow: 1;">El cierre épico de la trilogía original, donde todo el misterio se resuelve.</p>
               <div class="lia-stack lia-stack--sm" style="width: 100%;">
-                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary">Comprar Kindle</a>
-                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary">Comprar Pasta Blanda</a>
-                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;">Leer muestra</a>
+                <a href="#" class="lia-btn lia-btn--sm lia-btn--primary" data-modal data-modal-title="Amazon Kindle" data-modal-desc="📚 Próximamente disponible en Amazon Kindle." data-modal-icon="📚">📚 Comprar Kindle</a>
+                <a href="#" class="lia-btn lia-btn--sm lia-btn--secondary" data-modal data-modal-title="Amazon (Pasta Blanda)" data-modal-desc="Próximamente disponible en formato físico." data-modal-icon="📚">📚 Comprar Pasta Blanda</a>
+                <a href="#" class="lia-body" style="font-size: 0.85rem; text-decoration: none; color: var(--text-muted); transition: color 0.2s ease; margin-top: var(--space-2); display: inline-block;" data-modal data-modal-title="Muestra Gratuita" data-modal-desc="El primer capítulo estará disponible muy pronto." data-modal-icon="📖">📖 Leer muestra</a>
               </div>
             </div>
 

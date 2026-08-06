@@ -12,9 +12,9 @@ export const Footer = {
             </div>
             <p class="lia-body lia-text-muted">© 2025 LIA – Plataforma de Creación y Lectura con IA. Todos los derechos reservados.</p>
             <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: center;">
-              <a href="#" class="lia-body lia-text-muted" style="text-decoration: underline;">Privacidad (Plataforma)</a>
-              <a href="#" class="lia-body lia-text-muted" style="text-decoration: underline;">Privacidad (Servicios y Motor AI)</a>
-              <a href="#" class="lia-body lia-text-muted" style="text-decoration: underline;">Condiciones de Servicio</a>
+              <a href="#" class="lia-body lia-text-muted" style="text-decoration: underline;" data-modal data-modal-title="Privacidad" data-modal-desc="La política de privacidad estará disponible próximamente.">Privacidad (Plataforma)</a>
+              <a href="#" class="lia-body lia-text-muted" style="text-decoration: underline;" data-modal data-modal-title="Privacidad AI" data-modal-desc="La política de servicios AI estará disponible próximamente.">Privacidad (Servicios y Motor AI)</a>
+              <a href="#" class="lia-body lia-text-muted" style="text-decoration: underline;" data-modal data-modal-title="Condiciones" data-modal-desc="Los términos de servicio estarán disponibles próximamente.">Condiciones de Servicio</a>
             </div>
           </div>
         </div>
