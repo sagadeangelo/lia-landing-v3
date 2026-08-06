@@ -28,6 +28,9 @@ import { Continuum } from '../ui/Continuum.js';
 import { ContinuumFX } from '../ui/ContinuumFX.js';
 import { Features } from '../ui/Features.js';
 import { TrainSection } from '../ui/TrainSection.js';
+import { Simuladores } from '../ui/Simuladores.js';
+import { Guias } from '../ui/Guias.js';
+import { Publish } from '../ui/Publish.js';
 import { Library } from '../ui/Library.js';
 import { SocialProof } from '../ui/SocialProof.js';
 import { Vision } from '../ui/Vision.js';
@@ -36,6 +39,7 @@ import { About } from '../ui/About.js';
 import { CTA } from '../ui/CTA.js';
 import { Footer } from '../ui/Footer.js';
 import { EarlyAccess } from '../ui/EarlyAccess.js';
+import { ModalManager } from '../ui/Modal.js';
 
 const LIA_VERSION = '1.0.0-sprint-1';
 
@@ -66,6 +70,7 @@ export class LIA_OS {
     this._log('Booting…');
 
     this._mountLayout();
+    ModalManager.init();
     this._registerCoreModules();
     this._registerUIModules();
     this._startRAFLoop();
@@ -125,7 +130,10 @@ export class LIA_OS {
       '<div class="lia-container"><div class="lia-divider"></div></div>',
       Features.render(),
       TrainSection.render(),
+      Simuladores.render(),
+      Guias.render(),
       AppShowcase.render(),
+      Publish.render(),
       Library.render(),
       SocialProof.render(),
       Vision.render(),
@@ -134,6 +142,7 @@ export class LIA_OS {
       '</div>',
       '</main>',
       Footer.render(),
+      ModalManager.render(),
     ].join('\n');
   }
 

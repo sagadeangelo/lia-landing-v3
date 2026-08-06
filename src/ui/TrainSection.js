@@ -16,8 +16,8 @@ export const TrainSection = {
                 <li style="margin-bottom: var(--space-2);">✔ Resultado inmediato</li>
                 <li style="margin-bottom: var(--space-2);">✔ Basado en examen real</li>
               </ul>
-              <div class="lia-actions">
-                <a href="https://lia-tech.com/train" class="lia-btn lia-btn--primary">Descubre si pasarías hoy</a>
+              <div class="lia-stack lia-stack--sm" style="justify-content: center;">
+                <a href="https://lia-tech.com/train" class="lia-btn lia-btn--primary" target="_blank" rel="noopener noreferrer">🎓 Descubre si pasarías hoy</a>
               </div>
             </div>
             <div class="lia-train__visual" style="background: var(--surface-2); padding: var(--space-8); border-radius: var(--radius-lg); text-align: center; border: 1px solid var(--border-subtle);">

@@ -21,15 +21,16 @@ export const NavigationMarkup = {
           </a>
 
           <ul class="lia-nav__links" role="list">
-            <li><a href="#como-funciona" class="lia-nav__link lia-nav__link--active">Cómo funciona</a></li>
-            <li><a href="#biblioteca" class="lia-nav__link">Biblioteca</a></li>
+            <li><a href="#top" class="lia-nav__link">🏠 Inicio</a></li>
+            <li><a href="#como-funciona" class="lia-nav__link">Cómo funciona</a></li>
+            <li><a href="#biblioteca" class="lia-nav__link">📚 Biblioteca</a></li>
             <li><a href="#vision" class="lia-nav__link">Visión</a></li>
             <li><a href="#autor" class="lia-nav__link">El Proyecto</a></li>
           </ul>
 
           <div class="lia-nav__actions">
             <a href="#early-access" class="lia-btn lia-btn--sm lia-btn--primary">
-              <span>Acceso Anticipado</span>
+              <span>⭐ Acceso anticipado</span>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>
               </svg>

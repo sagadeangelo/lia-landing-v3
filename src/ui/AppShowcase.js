@@ -11,7 +11,7 @@ export const AppShowcase = {
             </video>
           </div>
           <p class="lia-body" style="color: var(--accent-secondary); margin-top: var(--space-4); font-weight: 600;">✨ La IA no crea por ti. Te impulsa a terminar tu historia.</p>
-          <a href="#" class="lia-body lia-text-muted" style="font-size: 0.875rem; text-decoration: underline;">Disponible ahora en Microsoft Store</a>
+          <a href="#" class="lia-body lia-text-muted" style="font-size: 0.875rem; text-decoration: underline;" data-modal data-modal-title="Microsoft Store" data-modal-desc="Disponible próximamente en Microsoft Store." data-modal-icon="🛍️">🛍️ Disponible ahora en Microsoft Store</a>
         </div>
       </section>
     `;

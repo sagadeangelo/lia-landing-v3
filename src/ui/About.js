@@ -20,7 +20,7 @@ export const About = {
               </p>
               <div class="lia-actions">
                 <a href="mailto:contacto@lia-tech.com" class="lia-btn lia-btn--primary">Hablemos</a>
-                <a href="https://wa.link/v0m2yz" target="_blank" rel="noopener" class="lia-btn lia-btn--secondary">Escríbeme por WhatsApp</a>
+                <a href="https://wa.link/v0m2yz" target="_blank" rel="noopener noreferrer" class="lia-btn lia-btn--secondary">Escríbeme por WhatsApp</a>
               </div>
             </div>
           </div>

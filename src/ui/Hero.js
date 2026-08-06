@@ -52,7 +52,7 @@ export const Hero = {
 
               <div class="lia-hero__actions">
                 <a href="#early-access" class="lia-btn lia-btn--primary" data-lia-action="explore">
-                  <span>Acceso Anticipado</span>
+                  <span>⭐ Acceso anticipado</span>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M5 12h14M13 5l7 7-7 7"/>
                   </svg>
@@ -62,7 +62,7 @@ export const Hero = {
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M12 8v4M12 16h.01"/>
                   </svg>
-                  <span>Explorar biblioteca</span>
+                  <span>📚 Explorar biblioteca</span>
                 </a>
               </div>
 
