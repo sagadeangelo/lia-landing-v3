@@ -1,0 +1,48 @@
+﻿commit 81aa45e3f9e6b9f597d270ff8b0994de34cb7e51
+Author: SagaDeAngelo <miguel.tovar.amaral@gmail.com>
+Date:   Wed Aug 5 08:45:55 2026 -0500
+
+    feat(sprint4.5): premium commercial polish
+
+diff --git a/src/ui/Publish.js b/src/ui/Publish.js
+new file mode 100644
+index 0000000..c49cb64
+--- /dev/null
++++ b/src/ui/Publish.js
+@@ -0,0 +1,36 @@
++export const Publish = {
++  render() {
++    return /* html */ `
++      <section id="publish" class="lia-section" aria-labelledby="publish-title">
++        <div class="lia-container">
++          <div class="lia-grid-2">
++            <div class="lia-stack lia-stack--lg">
++              <div class="lia-eyebrow">LIA Publish</div>
++              <h2 id="publish-title" class="lia-h2">Publica sin fricci├│n</h2>
++              <p class="lia-lead">Llevamos tu obra maestra desde el manuscrito hasta las manos de tus lectores, en digital y papel.</p>
++              <ul class="lia-list" style="list-style: none; padding: 0;">
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Correcci├│n de estilo con IA</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Maquetaci├│n KDP (Amazon)</li>
++                <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">Γ£ö</span> Dise├▒o de portadas y branding</li>
++              </ul>
++              <div class="lia-actions">
++                <a href="#servicios" class="lia-btn lia-btn--primary">Ver Servicios Editoriales</a>
++              </div>
++            </div>
++            <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">
++              <div style="font-size: 4rem; margin-bottom: var(--space-4);">≡ƒÜÇ</div>
++              <h3 class="lia-h4">Tu legado</h3>
++              <p class="lia-body lia-text-muted">Distribuci├│n global instant├ínea</p>
++            </div>
++          </div>
++          <div style="text-align: center; margin-top: var(--space-2xl);">
++             <a href="#ecosistema" class="lia-body" style="color: var(--text-muted); text-decoration: underline; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
++                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
++                Volver al ecosistema
++             </a>
++          </div>
++        </div>
++      </section>
++    `;
++  }
++};
