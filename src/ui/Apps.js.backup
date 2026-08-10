@@ -1,0 +1,582 @@
+const STAYLO_STORE_URL =
+  'https://apps.microsoft.com/detail/9pjbzk9sf26h';
+
+const TRAIN_URL =
+  '/simulador/';
+
+export const Apps = {
+  render() {
+    return /* html */ `
+      <section
+        id="apps"
+        class="lia-section lia-apps"
+        aria-labelledby="apps-title"
+      >
+
+        <div class="lia-container">
+
+          <div
+            class="lia-centered"
+            style="margin-bottom: var(--lia-space-3xl);"
+          >
+
+            <div class="lia-eyebrow">
+              Ecosistema LIA-Tech
+            </div>
+
+            <h2
+              id="apps-title"
+              class="lia-h2"
+            >
+              Todas tus herramientas. Un solo ecosistema.
+            </h2>
+
+            <p class="lia-lead">
+              Explora las aplicaciones creadas para escribir, aprender,
+              crear y llevar tus proyectos al siguiente nivel.
+            </p>
+
+          </div>
+
+
+          <div
+            class="lia-apps-grid"
+            style="
+              display: grid;
+              grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+              gap: 24px;
+            "
+          >
+
+            <!-- =====================================================
+                 LIA-STAYLO
+                 ===================================================== -->
+
+            <article
+              class="lia-card lia-card--glow"
+              style="
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 360px;
+                padding: 28px;
+                overflow: hidden;
+              "
+            >
+
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+
+                <div
+                  style="
+                    font-size: 2.4rem;
+                    line-height: 1;
+                  "
+                >
+                  ✍️
+                </div>
+
+                <span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 6px 11px;
+                    border-radius: 999px;
+                    font-size: 0.72rem;
+                    font-weight: 700;
+                    letter-spacing: 0.04em;
+                    color: #d9ffe8;
+                    background: rgba(34,197,94,0.12);
+                    border: 1px solid rgba(34,197,94,0.25);
+                  "
+                >
+                  DISPONIBLE
+                </span>
+
+              </div>
+
+              <div class="lia-eyebrow">
+                LIA-Staylo
+              </div>
+
+              <h3
+                class="lia-h3"
+                style="margin-top: 8px;"
+              >
+                Tu historia. Tu universo.
+              </h3>
+
+              <p
+                class="lia-body lia-text-muted"
+                style="margin-top: 10px;"
+              >
+                Una experiencia de escritura asistida por IA
+                diseñada para ayudarte a desarrollar tus historias
+                sin perder tu propia voz.
+              </p>
+
+              <div
+                style="
+                  margin-top: auto;
+                  padding-top: 24px;
+                "
+              >
+
+                <a
+                  href="${STAYLO_STORE_URL}"
+                  class="lia-btn lia-btn--primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  🛍️ Microsoft Store
+                </a>
+
+              </div>
+
+            </article>
+
+
+            <!-- =====================================================
+                 LIA-TRAIN
+                 ===================================================== -->
+
+            <article
+              class="lia-card lia-card--glow"
+              style="
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 360px;
+                padding: 28px;
+                overflow: hidden;
+              "
+            >
+
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+
+                <div
+                  style="
+                    font-size: 2.4rem;
+                    line-height: 1;
+                  "
+                >
+                  🎓
+                </div>
+
+                <span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 6px 11px;
+                    border-radius: 999px;
+                    font-size: 0.72rem;
+                    font-weight: 700;
+                    letter-spacing: 0.04em;
+                    color: #dbeafe;
+                    background: rgba(59,130,246,0.12);
+                    border: 1px solid rgba(59,130,246,0.25);
+                  "
+                >
+                  DISPONIBLE
+                </span>
+
+              </div>
+
+              <div class="lia-eyebrow">
+                LIA-Train
+              </div>
+
+              <h3
+                class="lia-h3"
+                style="margin-top: 8px;"
+              >
+                Entrena para tu futuro.
+              </h3>
+
+              <p
+                class="lia-body lia-text-muted"
+                style="margin-top: 10px;"
+              >
+                Simuladores y herramientas de preparación
+                para ayudarte a estudiar y enfrentar tus
+                evaluaciones con mayor confianza.
+              </p>
+
+              <div
+                style="
+                  margin-top: auto;
+                  padding-top: 24px;
+                "
+              >
+
+                <a
+                  href="${TRAIN_URL}"
+                  class="lia-btn lia-btn--primary"
+                >
+                  🚀 Abrir LIA-Train
+                </a>
+
+              </div>
+
+            </article>
+
+
+            <!-- =====================================================
+                 LIA-MAKE
+                 ===================================================== -->
+
+            <article
+              class="lia-card lia-card--glow"
+              style="
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 360px;
+                padding: 28px;
+                overflow: hidden;
+              "
+            >
+
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+
+                <div
+                  style="
+                    font-size: 2.4rem;
+                    line-height: 1;
+                  "
+                >
+                  🎨
+                </div>
+
+                <span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 6px 11px;
+                    border-radius: 999px;
+                    font-size: 0.72rem;
+                    font-weight: 700;
+                    letter-spacing: 0.04em;
+                    color: #f3e8ff;
+                    background: rgba(168,85,247,0.12);
+                    border: 1px solid rgba(168,85,247,0.25);
+                  "
+                >
+                  EN DESARROLLO
+                </span>
+
+              </div>
+
+              <div class="lia-eyebrow">
+                LIA-Make
+              </div>
+
+              <h3
+                class="lia-h3"
+                style="margin-top: 8px;"
+              >
+                Convierte ideas en realidad.
+              </h3>
+
+              <p
+                class="lia-body lia-text-muted"
+                style="margin-top: 10px;"
+              >
+                Herramientas creativas de LIA-Tech para
+                transformar conceptos, proyectos y contenido
+                en experiencias digitales.
+              </p>
+
+              <div
+                style="
+                  margin-top: auto;
+                  padding-top: 24px;
+                "
+              >
+
+                <span
+                  class="lia-body lia-text-muted"
+                  style="
+                    font-size: 0.85rem;
+                  "
+                >
+                  Próximamente
+                </span>
+
+              </div>
+
+            </article>
+
+
+            <!-- =====================================================
+                 LIA-PUBLISH
+                 ===================================================== -->
+
+            <article
+              class="lia-card lia-card--glow"
+              style="
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 330px;
+                padding: 28px;
+                overflow: hidden;
+              "
+            >
+
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+
+                <div
+                  style="
+                    font-size: 2.4rem;
+                    line-height: 1;
+                  "
+                >
+                  📚
+                </div>
+
+                <span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 6px 11px;
+                    border-radius: 999px;
+                    font-size: 0.72rem;
+                    font-weight: 700;
+                    letter-spacing: 0.04em;
+                    color: #fef3c7;
+                    background: rgba(245,158,11,0.12);
+                    border: 1px solid rgba(245,158,11,0.25);
+                  "
+                >
+                  PRÓXIMAMENTE
+                </span>
+
+              </div>
+
+              <div class="lia-eyebrow">
+                LIA-Publish
+              </div>
+
+              <h3
+                class="lia-h3"
+                style="margin-top: 8px;"
+              >
+                Publica tu universo.
+              </h3>
+
+              <p
+                class="lia-body lia-text-muted"
+                style="margin-top: 10px;"
+              >
+                Herramientas para preparar, publicar y
+                presentar tus proyectos creativos.
+              </p>
+
+              <div
+                style="
+                  margin-top: auto;
+                  padding-top: 24px;
+                "
+              >
+
+                <span class="lia-body lia-text-muted">
+                  Próximamente
+                </span>
+
+              </div>
+
+            </article>
+
+
+            <!-- =====================================================
+                 LIA-EMPLOYX
+                 ===================================================== -->
+
+            <article
+              class="lia-card lia-card--glow"
+              style="
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 330px;
+                padding: 28px;
+                overflow: hidden;
+              "
+            >
+
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+
+                <div
+                  style="
+                    font-size: 2.4rem;
+                    line-height: 1;
+                  "
+                >
+                  💼
+                </div>
+
+                <span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 6px 11px;
+                    border-radius: 999px;
+                    font-size: 0.72rem;
+                    font-weight: 700;
+                    letter-spacing: 0.04em;
+                    color: #e0f2fe;
+                    background: rgba(14,165,233,0.12);
+                    border: 1px solid rgba(14,165,233,0.25);
+                  "
+                >
+                  EN DESARROLLO
+                </span>
+
+              </div>
+
+              <div class="lia-eyebrow">
+                LIA-EmployX
+              </div>
+
+              <h3
+                class="lia-h3"
+                style="margin-top: 8px;"
+              >
+                Tu próximo trabajo.
+              </h3>
+
+              <p
+                class="lia-body lia-text-muted"
+                style="margin-top: 10px;"
+              >
+                Una plataforma inteligente para organizar
+                tu perfil profesional, descubrir oportunidades
+                y acelerar tu búsqueda laboral.
+              </p>
+
+              <div
+                style="
+                  margin-top: auto;
+                  padding-top: 24px;
+                "
+              >
+
+                <span class="lia-body lia-text-muted">
+                  Próximamente
+                </span>
+
+              </div>
+
+            </article>
+
+
+            <!-- =====================================================
+                 FUTURO
+                 ===================================================== -->
+
+            <article
+              class="lia-card lia-card--glow"
+              style="
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 330px;
+                padding: 28px;
+                overflow: hidden;
+              "
+            >
+
+              <div
+                style="
+                  font-size: 2.4rem;
+                  line-height: 1;
+                  margin-bottom: 20px;
+                "
+              >
+                ✨
+              </div>
+
+              <div class="lia-eyebrow">
+                LIA-Tech
+              </div>
+
+              <h3
+                class="lia-h3"
+                style="margin-top: 8px;"
+              >
+                Y esto apenas comienza.
+              </h3>
+
+              <p
+                class="lia-body lia-text-muted"
+                style="margin-top: 10px;"
+              >
+                Nuevas aplicaciones, agentes y experiencias
+                inteligentes se incorporarán progresivamente
+                al ecosistema LIA-Tech.
+              </p>
+
+              <div
+                style="
+                  margin-top: auto;
+                  padding-top: 24px;
+                "
+              >
+
+                <span class="lia-body lia-text-muted">
+                  Más aplicaciones próximamente
+                </span>
+
+              </div>
+
+            </article>
+
+          </div>
+
+        </div>
+
+      </section>
+    `;
+  }
+};

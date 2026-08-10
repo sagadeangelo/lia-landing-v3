@@ -181,3 +181,993 @@
   box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
+
+/* =========================================================
+   LIA LIBRARY — BOOK EXPERIENCE
+   ========================================================= */
+
+.lia-library {
+  position: relative;
+}
+
+.lia-library-heading {
+  max-width: 760px;
+  margin: 0 auto var(--space-4xl);
+}
+
+.lia-library-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: stretch;
+}
+
+.lia-library-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+  padding: clamp(1.25rem, 2vw, 2rem);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.012);
+  border: 1px solid rgba(255, 255, 255, 0.035);
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.lia-library-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(124, 58, 237, 0.25);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.22),
+    0 0 35px rgba(124, 58, 237, 0.08);
+}
+
+.lia-book-trigger {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0 0 var(--space-5);
+  cursor: pointer;
+  display: block;
+  width: min(100%, 220px);
+  perspective: 1200px;
+}
+
+.lia-book-container {
+  display: block;
+  width: 100%;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.lia-book-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 4px 8px 8px 4px;
+
+  box-shadow:
+    inset 4px 0 10px rgba(0, 0, 0, 0.18),
+    inset -1px 0 2px rgba(255, 255, 255, 0.25),
+    5px 5px 15px rgba(0, 0, 0, 0.35),
+    15px 15px 30px rgba(0, 0, 0, 0.16);
+
+  transform-origin: center left;
+  transform: rotateY(-15deg) rotateX(2deg) translateZ(0);
+
+  transition:
+    transform 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.4s ease;
+}
+
+.lia-library-card:hover .lia-book-cover,
+.lia-book-trigger:hover .lia-book-cover,
+.lia-book-trigger:focus-visible .lia-book-cover {
+  transform:
+    rotateY(-5deg)
+    rotateX(1deg)
+    scale(1.055)
+    translateZ(8px);
+
+  box-shadow:
+    inset 4px 0 10px rgba(0, 0, 0, 0.12),
+    inset -1px 0 2px rgba(255, 255, 255, 0.4),
+    8px 12px 25px rgba(0, 0, 0, 0.45),
+    20px 25px 45px rgba(0, 0, 0, 0.24),
+    0 0 28px rgba(124, 58, 237, 0.18);
+
+  filter: brightness(1.08);
+}
+
+.lia-book-trigger:focus-visible {
+  outline: 2px solid rgba(124, 58, 237, 0.8);
+  outline-offset: 8px;
+  border-radius: 8px;
+}
+
+.lia-book-card-title {
+  max-width: 260px;
+  margin-bottom: var(--space-2);
+}
+
+.lia-book-card-summary {
+  max-width: 310px;
+  margin-bottom: var(--space-5);
+  flex-grow: 1;
+}
+
+.lia-book-details-link {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.4rem 0;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.lia-book-details-link:hover {
+  color: var(--text-primary);
+  transform: translateX(3px);
+}
+
+.lia-library-back-home {
+  text-align: center;
+  margin-top: var(--space-4xl);
+}
+
+/* =========================================================
+   BOOK DETAIL MODAL
+   ========================================================= */
+
+body.lia-book-modal-open {
+  overflow: hidden;
+}
+
+.lia-book-detail-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 3rem);
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(124, 58, 237, 0.12),
+      transparent 45%
+    ),
+    rgba(2, 5, 12, 0.88);
+
+  backdrop-filter: blur(14px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.lia-book-detail-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.lia-book-detail-modal {
+  position: relative;
+  width: min(1080px, 100%);
+  max-height: min(820px, 92vh);
+  overflow-y: auto;
+
+  padding: clamp(1.5rem, 4vw, 3rem);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(20, 25, 45, 0.97),
+      rgba(8, 12, 24, 0.97)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 24px;
+
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(124, 58, 237, 0.12);
+
+  transform: translateY(20px) scale(0.97);
+
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lia-book-detail-overlay.is-open .lia-book-detail-modal {
+  transform: translateY(0) scale(1);
+}
+
+.lia-book-detail-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+
+  font-size: 1.8rem;
+  line-height: 1;
+
+  cursor: pointer;
+  z-index: 2;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.lia-book-detail-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+.lia-book-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 330px) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.lia-book-detail-cover-wrap {
+  display: flex;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.lia-book-detail-cover {
+  display: block;
+  width: min(100%, 300px);
+  height: auto;
+
+  border-radius: 5px 10px 10px 5px;
+
+  box-shadow:
+    8px 12px 25px rgba(0, 0, 0, 0.45),
+    25px 30px 55px rgba(0, 0, 0, 0.3);
+
+  transform:
+    perspective(1200px)
+    rotateY(-8deg);
+}
+
+.lia-book-detail-info {
+  min-width: 0;
+}
+
+.lia-book-detail-info .lia-h2 {
+  margin-bottom: var(--space-5);
+  padding-right: 2rem;
+}
+
+.lia-book-detail-description {
+  max-width: 650px;
+  line-height: 1.75;
+  margin-bottom: var(--space-6);
+}
+
+.lia-book-detail-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: var(--space-6);
+}
+
+.lia-book-info-panel {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  padding: 1rem;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.lia-book-info-icon {
+  font-size: 1.4rem;
+}
+
+.lia-book-info-panel div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.lia-book-info-panel strong {
+  font-size: 0.9rem;
+}
+
+.lia-book-info-panel span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.lia-book-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.lia-book-detail-actions .lia-btn {
+  flex: 1 1 220px;
+}
+
+.lia-book-amazon-link {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 0.5rem;
+}
+
+.lia-book-amazon-link:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 900px) {
+  .lia-library-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lia-book-detail-layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .lia-library-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+
+  .lia-book-trigger {
+    width: min(100%, 210px);
+  }
+
+  .lia-book-detail-modal {
+    padding: 1.25rem;
+    border-radius: 18px;
+  }
+
+  .lia-book-detail-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .lia-book-detail-cover {
+    width: min(190px, 65vw);
+  }
+
+  .lia-book-detail-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .lia-book-detail-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lia-book-detail-actions .lia-btn,
+  .lia-book-amazon-link {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+/* =========================================================
+   LIA LIBRARY — BOOK TAGLINE
+   ========================================================= */
+
+.lia-book-detail-tagline {
+  margin: -0.75rem 0 var(--space-5);
+  max-width: 650px;
+  color: var(--text-primary);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.55;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+
+/* =========================================================
+   LIA BOOK DETAIL — MODAL SCROLL FIX
+   El contenido del libro debe desplazarse dentro del modal,
+   nunca la página que queda detrás.
+   ========================================================= */
+
+body.lia-book-modal-open {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+
+.lia-book-detail-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 2rem !important;
+  box-sizing: border-box;
+
+  z-index: 99999 !important;
+}
+
+.lia-book-detail-modal {
+  max-height: calc(100vh - 4rem) !important;
+
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch;
+
+  box-sizing: border-box;
+}
+
+/*
+ * En pantallas pequeñas permitimos que el modal ocupe
+ * prácticamente toda la pantalla.
+ */
+
+@media (max-width: 768px) {
+
+  .lia-book-detail-overlay {
+    padding: 1rem !important;
+  }
+
+  .lia-book-detail-modal {
+    max-height: calc(100vh - 2rem) !important;
+  }
+}
+
+
+/* =========================================================
+   LIA APPS — APP ECOSYSTEM
+   ========================================================= */
+
+.lia-apps-heading {
+  max-width: 760px;
+  margin-inline: auto;
+  margin-bottom: var(--lia-space-3xl);
+}
+
+.lia-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.lia-app-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+  padding: 28px;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.lia-app-card:hover {
+  transform: translateY(-5px);
+}
+
+.lia-app-card:focus-visible {
+  outline: 2px solid rgba(168, 85, 247, 0.8);
+  outline-offset: 4px;
+}
+
+.lia-app-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.lia-app-icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.lia-app-status,
+.lia-app-detail-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.lia-app-status--available,
+.lia-app-detail-status--available {
+  color: #d9ffe8;
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.28);
+}
+
+.lia-app-status--available-blue,
+.lia-app-detail-status--available-blue {
+  color: #dbeafe;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.28);
+}
+
+.lia-app-status--development,
+.lia-app-detail-status--development {
+  color: #f3e8ff;
+  background: rgba(168,85,247,0.12);
+  border: 1px solid rgba(168,85,247,0.28);
+}
+
+.lia-app-status--development-blue,
+.lia-app-detail-status--development-blue {
+  color: #e0f2fe;
+  background: rgba(14,165,233,0.12);
+  border: 1px solid rgba(14,165,233,0.28);
+}
+
+.lia-app-status--coming,
+.lia-app-detail-status--coming {
+  color: #fef3c7;
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.28);
+}
+
+.lia-app-card-title {
+  margin-top: 8px;
+}
+
+.lia-app-card-summary {
+  margin-top: 10px;
+}
+
+.lia-app-card-footer {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.lia-app-card-footer .lia-btn {
+  position: relative;
+  z-index: 2;
+}
+
+.lia-app-details-hint {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.lia-app-card--future {
+  cursor: default;
+  justify-content: flex-start;
+}
+
+.lia-app-card--future:hover {
+  transform: none;
+}
+
+
+/* =========================================================
+   APP DETAIL MODAL
+   ========================================================= */
+
+.lia-app-detail-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: clamp(1rem, 3vw, 2.5rem);
+
+  background:
+    rgba(3, 5, 18, 0.82);
+
+  backdrop-filter: blur(18px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  overflow-y: auto;
+
+  transition:
+    opacity 220ms ease,
+    visibility 220ms ease;
+}
+
+.lia-app-detail-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.lia-app-detail-modal {
+  position: relative;
+
+  width: min(1080px, 100%);
+
+  max-height: min(88vh, 900px);
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+
+  border-radius: 26px;
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(124,58,237,0.16),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 90% 85%,
+      rgba(6,182,212,0.10),
+      transparent 30%
+    ),
+    rgba(9, 13, 29, 0.97);
+
+  box-shadow:
+    0 40px 100px rgba(0,0,0,0.55),
+    0 0 60px rgba(124,58,237,0.12);
+
+  transform: translateY(16px) scale(0.985);
+
+  transition:
+    transform 240ms ease;
+}
+
+.lia-app-detail-overlay.is-open
+.lia-app-detail-modal {
+  transform: translateY(0) scale(1);
+}
+
+.lia-app-detail-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.lia-app-detail-back {
+  appearance: none;
+
+  border: 1px solid rgba(255,255,255,0.12);
+
+  background: rgba(255,255,255,0.04);
+
+  color: var(--text-muted, #a8adbd);
+
+  border-radius: 999px;
+
+  padding: 9px 16px;
+
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.lia-app-detail-back:hover {
+  color: var(--text-primary, #fff);
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(168,85,247,0.35);
+  transform: translateX(-2px);
+}
+
+.lia-app-detail-close {
+  appearance: none;
+
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255,255,255,0.12);
+
+  background: rgba(255,255,255,0.04);
+
+  color: #fff;
+
+  font-size: 1.8rem;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.lia-app-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  margin-bottom: 26px;
+}
+
+.lia-app-detail-icon {
+  flex: 0 0 auto;
+
+  width: 88px;
+  height: 88px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(168,85,247,0.18),
+      rgba(6,182,212,0.08)
+    );
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  font-size: 3rem;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.25);
+}
+
+.lia-app-detail-status {
+  margin-bottom: 8px;
+}
+
+.lia-app-detail-body {
+  display: block;
+}
+
+.lia-app-detail-main {
+  max-width: 920px;
+}
+
+.lia-app-detail-video {
+  margin-top: 28px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(255,255,255,0.09);
+
+  background: #050814;
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.30);
+}
+
+.lia-app-detail-video video {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  max-height: 560px;
+
+  background: #050814;
+}
+
+.lia-app-detail-section {
+  margin-top: 32px;
+}
+
+.lia-app-feature-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 14px;
+}
+
+.lia-app-feature-card {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.025);
+
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.lia-app-feature-icon {
+  flex: 0 0 auto;
+
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 12px;
+
+  background: rgba(168,85,247,0.10);
+
+  font-size: 1.15rem;
+}
+
+.lia-app-feature-card strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 0.95rem;
+}
+
+.lia-app-feature-card p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 0.86rem;
+
+  line-height: 1.6;
+}
+
+.lia-app-detail-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 34px;
+
+  padding-top: 22px;
+
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.lia-app-coming-label {
+  color: var(--text-muted);
+
+  font-size: 0.9rem;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BODY LOCK
+   ========================================================= */
+
+html.lia-app-modal-open,
+body.lia-app-modal-open {
+  overflow: hidden !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .lia-apps-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .lia-apps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lia-app-detail-overlay {
+    padding: 0.75rem;
+  }
+
+  .lia-app-detail-modal {
+    max-height: 94vh;
+    border-radius: 20px;
+    padding: 1.15rem;
+  }
+
+  .lia-app-detail-header {
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .lia-app-detail-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    font-size: 2rem;
+  }
+
+  .lia-app-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lia-app-detail-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lia-app-detail-actions .lia-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+}
