@@ -1171,3 +1171,695 @@ body.lia-app-modal-open {
   }
 
 }
+
+/* ============================================================
+   LIA-TECH ECOSYSTEM BANNER
+   Rotating product showcase
+   ============================================================ */
+
+.lia-ecosystem-banner {
+  position: relative;
+  width: min(
+    calc(100% - 32px),
+    1180px
+  );
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(139, 92, 246, 0.24);
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.10),
+      rgba(15, 23, 42, 0.72) 45%,
+      rgba(6, 182, 212, 0.07)
+    );
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.025) inset,
+    0 14px 50px rgba(0, 0, 0, 0.20),
+    0 0 35px rgba(124, 58, 237, 0.08);
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms ease;
+  isolation: isolate;
+}
+
+.lia-ecosystem-banner:hover {
+  border-color: rgba(139, 92, 246, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+    0 18px 60px rgba(0, 0, 0, 0.24),
+    0 0 45px rgba(124, 58, 237, 0.14);
+  transform: translateY(-1px);
+}
+
+.lia-ecosystem-banner__glow {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(124, 58, 237, 0.13) 0%,
+      rgba(124, 58, 237, 0.04) 35%,
+      transparent 70%
+    );
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: -1;
+  animation: lia-ecosystem-pulse 4s ease-in-out infinite;
+}
+
+.lia-ecosystem-banner__link {
+  position: relative;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  padding: 17px 24px 12px;
+}
+
+.lia-ecosystem-banner__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.lia-ecosystem-banner__copy {
+  min-width: 0;
+}
+
+.lia-ecosystem-banner__eyebrow {
+  margin-bottom: 4px;
+  color: #a5f3fc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lia-ecosystem-banner__title {
+  color: #ffffff;
+  font-size: clamp(
+    0.92rem,
+    1.6vw,
+    1.18rem
+  );
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.lia-ecosystem-banner__description {
+  margin-top: 4px;
+  color: rgba(226, 232, 240, 0.68);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.lia-ecosystem-banner__cta {
+  flex: 0 0 auto;
+  padding: 9px 14px;
+  border: 1px solid rgba(165, 243, 252, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+  color: #a5f3fc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transition:
+    background 250ms ease,
+    border-color 250ms ease,
+    transform 250ms ease;
+}
+
+.lia-ecosystem-banner:hover
+.lia-ecosystem-banner__cta {
+  background: rgba(165, 243, 252, 0.07);
+  border-color: rgba(165, 243, 252, 0.35);
+  transform: translateX(2px);
+}
+
+.lia-ecosystem-banner__progress {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  margin-top: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.lia-ecosystem-banner__progress span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    rgba(124, 58, 237, 0.15),
+    rgba(165, 243, 252, 0.8)
+  );
+  animation: lia-ecosystem-progress 30s linear infinite;
+}
+
+.lia-ecosystem-banner--paused
+.lia-ecosystem-banner__progress span {
+  animation-play-state: paused;
+}
+
+.lia-ecosystem-banner--changing
+.lia-ecosystem-banner__copy {
+  opacity: 0;
+  transform: translateY(3px);
+}
+
+.lia-ecosystem-banner__copy {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+
+@keyframes lia-ecosystem-progress {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes lia-ecosystem-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateY(-50%) scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.08);
+  }
+}
+
+@media (max-width: 767px) {
+
+  .lia-ecosystem-banner {
+    width: calc(100% - 24px);
+    border-radius: 12px;
+  }
+
+  .lia-ecosystem-banner__link {
+    padding: 15px 16px 11px;
+  }
+
+  .lia-ecosystem-banner__content {
+    gap: 12px;
+  }
+
+  .lia-ecosystem-banner__description {
+    font-size: 0.71rem;
+  }
+
+  .lia-ecosystem-banner__cta {
+    padding: 8px 10px;
+    font-size: 0.60rem;
+  }
+
+  .lia-ecosystem-banner__progress span {
+    animation-duration: 35s;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .lia-ecosystem-banner__glow {
+    animation: none;
+  }
+
+  .lia-ecosystem-banner__progress span {
+    animation: none;
+    width: 100%;
+  }
+
+  .lia-ecosystem-banner,
+  .lia-ecosystem-banner__copy,
+  .lia-ecosystem-banner__cta {
+    transition: none;
+  }
+
+}
+/* ============================================================
+   LIA-TECH ECOSYSTEM BANNER — NEON ROTATION
+   Visual layer / 40s rotation
+   ============================================================ */
+
+.lia-ecosystem-banner {
+  --eco-a: #ff9f00;
+  --eco-b: #fff200;
+  --eco-glow: rgba(255, 174, 0, 0.28);
+
+  width: min(80vw, 1500px);
+  max-width: 1500px;
+
+  border-color: color-mix(
+    in srgb,
+    var(--eco-a) 62%,
+    transparent
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+    0 12px 45px rgba(0, 0, 0, 0.28),
+    0 0 30px var(--eco-glow);
+
+  transition:
+    width 400ms ease,
+    border-color 500ms ease,
+    box-shadow 500ms ease,
+    transform 300ms ease;
+}
+
+/* ------------------------------------------------------------
+   PRODUCT COLORS
+   ------------------------------------------------------------ */
+
+.lia-ecosystem-banner[data-product="train"] {
+  --eco-a: #ff9f00;
+  --eco-b: #fff200;
+  --eco-glow: rgba(255, 174, 0, 0.30);
+}
+
+.lia-ecosystem-banner[data-product="staylo"] {
+  --eco-a: #ff3bd4;
+  --eco-b: #a855f7;
+  --eco-glow: rgba(255, 59, 212, 0.28);
+}
+
+.lia-ecosystem-banner[data-product="employx"] {
+  --eco-a: #00e5ff;
+  --eco-b: #3b82f6;
+  --eco-glow: rgba(0, 229, 255, 0.27);
+}
+
+.lia-ecosystem-banner[data-product="make"] {
+  --eco-a: #a78bfa;
+  --eco-b: #ff4fd8;
+  --eco-glow: rgba(167, 139, 250, 0.28);
+}
+
+.lia-ecosystem-banner[data-product="publish"] {
+  --eco-a: #22d3ee;
+  --eco-b: #34d399;
+  --eco-glow: rgba(34, 211, 238, 0.27);
+}
+
+/* Por si en el futuro agregamos un producto LIA-Tech */
+.lia-ecosystem-banner[data-product="tech"] {
+  --eco-a: #f59e0b;
+  --eco-b: #f97316;
+  --eco-glow: rgba(249, 115, 22, 0.28);
+}
+
+/* ------------------------------------------------------------
+   BORDER / NEON
+   ------------------------------------------------------------ */
+
+.lia-ecosystem-banner {
+  border: 1px solid color-mix(
+    in srgb,
+    var(--eco-a) 68%,
+    transparent
+  );
+}
+
+.lia-ecosystem-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--eco-a) 10%, transparent) 35%,
+      color-mix(in srgb, var(--eco-b) 10%, transparent) 65%,
+      transparent 100%
+    );
+
+  opacity: 0.75;
+  z-index: -1;
+}
+
+.lia-ecosystem-banner:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--eco-b) 88%,
+    white 12%
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+    0 18px 55px rgba(0, 0, 0, 0.30),
+    0 0 42px var(--eco-glow);
+
+  transform: translateY(-2px);
+}
+
+/* ------------------------------------------------------------
+   GLOW
+   ------------------------------------------------------------ */
+
+.lia-ecosystem-banner__glow {
+  background:
+    radial-gradient(
+      circle at center,
+      color-mix(
+        in srgb,
+        var(--eco-b) 30%,
+        transparent
+      ) 0%,
+      color-mix(
+        in srgb,
+        var(--eco-a) 13%,
+        transparent
+      ) 35%,
+      transparent 72%
+    ) !important;
+
+  filter: blur(10px);
+  opacity: 0.9;
+}
+
+/* ------------------------------------------------------------
+   TEXT
+   ------------------------------------------------------------ */
+
+.lia-ecosystem-banner__eyebrow {
+  color: var(--eco-b) !important;
+
+  text-shadow:
+    0 0 12px color-mix(
+      in srgb,
+      var(--eco-b) 45%,
+      transparent
+    );
+
+  transition:
+    color 500ms ease,
+    text-shadow 500ms ease;
+}
+
+.lia-ecosystem-banner__title {
+  color: #ffffff;
+}
+
+.lia-ecosystem-banner__description {
+  color: rgba(226, 232, 240, 0.70);
+}
+
+/* ------------------------------------------------------------
+   CTA
+   ------------------------------------------------------------ */
+
+.lia-ecosystem-banner__cta {
+  color: var(--eco-b) !important;
+
+  border-color: color-mix(
+    in srgb,
+    var(--eco-a) 42%,
+    transparent
+  ) !important;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--eco-a) 5%,
+      transparent
+    ) !important;
+
+  box-shadow:
+    0 0 18px color-mix(
+      in srgb,
+      var(--eco-a) 8%,
+      transparent
+    );
+
+  transition:
+    color 500ms ease,
+    border-color 500ms ease,
+    background 500ms ease,
+    box-shadow 500ms ease,
+    transform 250ms ease;
+}
+
+.lia-ecosystem-banner:hover
+.lia-ecosystem-banner__cta {
+  color: var(--eco-b) !important;
+
+  border-color: color-mix(
+    in srgb,
+    var(--eco-b) 65%,
+    transparent
+  ) !important;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--eco-b) 9%,
+      transparent
+    ) !important;
+
+  box-shadow:
+    0 0 22px color-mix(
+      in srgb,
+      var(--eco-b) 14%,
+      transparent
+    );
+
+  transform: translateX(3px);
+}
+
+/* ------------------------------------------------------------
+   PROGRESS BAR
+   ------------------------------------------------------------ */
+
+.lia-ecosystem-banner__progress span {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(
+        in srgb,
+        var(--eco-a) 25%,
+        transparent
+      ),
+      var(--eco-a),
+      var(--eco-b)
+    ) !important;
+
+  box-shadow:
+    0 0 12px color-mix(
+      in srgb,
+      var(--eco-b) 55%,
+      transparent
+    );
+
+  animation-duration: 40s !important;
+
+  transition:
+    background 500ms ease,
+    box-shadow 500ms ease;
+}
+
+/* ------------------------------------------------------------
+   CAMBIO DE PRODUCTO
+   ------------------------------------------------------------ */
+
+.lia-ecosystem-banner--changing {
+  border-color: color-mix(
+    in srgb,
+    var(--eco-b) 85%,
+    transparent
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 38px var(--eco-glow);
+}
+
+/* ------------------------------------------------------------
+   MOBILE
+   ------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+  .lia-ecosystem-banner {
+    width: calc(100% - 24px);
+    max-width: none;
+  }
+
+  .lia-ecosystem-banner__content {
+    gap: 10px;
+  }
+
+  .lia-ecosystem-banner__cta {
+    white-space: nowrap;
+  }
+
+  .lia-ecosystem-banner__progress span {
+    animation-duration: 40s !important;
+  }
+}
+
+/* =========================================================
+   LIA-TECH — FIX FINAL HERO + ECOSYSTEM BANNER
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   HERO
+   Deja espacio real debajo de la navegación fija.
+   --------------------------------------------------------- */
+
+.lia-hero {
+  padding-top: clamp(110px, 9vh, 145px);
+}
+
+/* ---------------------------------------------------------
+   BANNER
+   Ahora vive dentro de la columna izquierda del Hero.
+   No debe desbordarse hacia toda la pantalla.
+   --------------------------------------------------------- */
+
+.lia-hero__ecosystem-slot {
+  position: relative;
+  width: 82%;
+  max-width: 980px;
+  margin-top: clamp(28px, 3vw, 42px);
+  margin-left: 0;
+  margin-right: auto;
+  z-index: 20;
+}
+
+/* Anula el width: 80vw / 1500px del bloque anterior */
+.lia-hero__ecosystem-slot .lia-ecosystem-banner {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+/* Mantener el banner compacto */
+.lia-hero__ecosystem-slot .lia-ecosystem-banner__link {
+  padding: 14px 18px 10px;
+}
+
+.lia-hero__ecosystem-slot .lia-ecosystem-banner__content {
+  gap: 18px;
+}
+
+/* ---------------------------------------------------------
+   OCULTAR DEFINITIVAMENTE LOS ANTIGUOS METADATOS
+   --------------------------------------------------------- */
+
+.lia-hero__meta {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------
+   TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+
+  .lia-hero {
+    padding-top: 105px;
+  }
+
+  .lia-hero__ecosystem-slot {
+    width: 88%;
+    max-width: 760px;
+  }
+}
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 640px) {
+
+  .lia-hero {
+    padding-top: 92px;
+  }
+
+  .lia-hero__ecosystem-slot {
+    width: 100%;
+    max-width: none;
+    margin-top: 24px;
+  }
+
+  .lia-hero__ecosystem-slot .lia-ecosystem-banner__link {
+    padding: 13px 14px 9px;
+  }
+}
+
+/* =========================================================
+   FIX — HERO BADGE / TU CREATIVIDAD PRIMERO
+   Evita que el badge quede debajo de la navegación fija.
+   No modifica la posición del título ni del banner.
+   ========================================================= */
+
+.lia-hero__badge {
+  position: relative;
+  z-index: 50;
+  margin-top: 95px;
+  margin-bottom: 28px;
+}
+
+/* Mantener la composición del Hero sin desplazamientos
+   adicionales en escritorio */
+.lia-hero__content {
+  position: relative;
+  z-index: 10;
+}
+
+/* El badge nunca debe quedar detrás de la navegación */
+.lia-hero__badge-label {
+  position: relative;
+  z-index: 51;
+}
+
+/* ---------------------------------------------------------
+   TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+
+  .lia-hero__badge {
+    margin-top: 82px;
+    margin-bottom: 24px;
+  }
+}
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 640px) {
+
+  .lia-hero__badge {
+    margin-top: 70px;
+    margin-bottom: 20px;
+  }
+}

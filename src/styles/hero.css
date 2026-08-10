@@ -1149,3 +1149,42 @@
 
   .lia-hero__tether { display: none; }
 }
+
+/* =========================================================
+   HERO — ECOSYSTEM BANNER
+   Banner ubicado debajo de los CTAs.
+   Reemplaza visualmente el antiguo bloque de metadatos.
+   ========================================================= */
+
+.lia-hero__ecosystem-slot {
+  width: 100%;
+  margin-top: var(--lia-space-lg);
+  position: relative;
+  z-index: 10;
+}
+
+/* El banner ocupa todo el ancho disponible de la columna izquierda */
+.lia-hero__ecosystem-slot .lia-ecosystem-banner {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+/* Evita que el banner aumente excesivamente la altura del Hero */
+.lia-hero__ecosystem-slot .lia-ecosystem-banner__link {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+/* El contenido del banner debe permanecer compacto */
+.lia-hero__ecosystem-slot .lia-ecosystem-banner__content {
+  gap: 18px;
+}
+
+/* =========================================================
+   ELIMINAR DEFINITIVAMENTE LOS ANTIGUOS METADATOS DEL HERO
+   ========================================================= */
+
+.lia-hero__meta {
+  display: none !important;
+}

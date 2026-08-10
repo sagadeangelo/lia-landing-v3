@@ -27,6 +27,8 @@ import { NavigationMarkup } from '../ui/NavigationMarkup.js';
 import { Hero } from '../ui/Hero.js';
 import { HeroFX } from '../ui/HeroFX.js';
 
+import { EcosystemBanner } from '../ui/EcosystemBanner.js';
+
 import { Continuum } from '../ui/Continuum.js';
 import { ContinuumFX } from '../ui/ContinuumFX.js';
 
@@ -40,9 +42,6 @@ import { Publish } from '../ui/Publish.js';
 
 import { Library } from '../ui/Library.js';
 
-/*
- * Catálogo central de aplicaciones LIA-Tech.
- */
 import { Apps } from '../ui/Apps.js';
 
 import { SocialProof } from '../ui/SocialProof.js';
@@ -145,18 +144,40 @@ export class LIA_OS {
      *
      * IMPORTANTE:
      * Apps.render() crea las tarjetas y el modal.
-     * Apps.init() conecta los eventos de:
-     * · Click
-     * · Enter
-     * · Escape
-     * · Volver a Apps
-     * · Cerrar
-     * · Scroll interno
-     * · Video de Staylo
+     * Apps.init() conecta los eventos.
      * ===============================================================
      */
 
     Apps.init();
+
+
+    /*
+     * ===============================================================
+     * INICIALIZACIÓN DEL BANNER DEL ECOSISTEMA
+     *
+     * El banner vive visualmente dentro del Hero,
+     * ocupando el espacio que anteriormente utilizaban
+     * las métricas:
+     *
+     * · Módulos activos
+     * · Filosofía
+     * · Stack
+     *
+     * De esta manera:
+     *
+     * 1. El banner aparece mucho antes.
+     * 2. No agrega altura innecesaria al Hero.
+     * 3. Sigue perteneciendo al Home.
+     * 4. Cada banner puede llevar directamente a su producto.
+     * ===============================================================
+     */
+
+    this.register(
+      'ecosystemBanner',
+      EcosystemBanner
+    );
+
+    EcosystemBanner.init();
 
 
     /*
@@ -222,6 +243,12 @@ export class LIA_OS {
 
   destroy() {
 
+    /*
+     * ===============================================================
+     * DETENER RAF
+     * ===============================================================
+     */
+
     if (this.rafId) {
 
       cancelAnimationFrame(
@@ -233,12 +260,19 @@ export class LIA_OS {
     }
 
 
+    /*
+     * ===============================================================
+     * DESTRUIR MÓDULOS REGISTRADOS
+     * ===============================================================
+     */
+
     for (
       const mod
       of this.modules.values()
     ) {
 
       if (
+        mod &&
         typeof mod.destroy === 'function'
       ) {
 
@@ -248,7 +282,10 @@ export class LIA_OS {
 
         } catch (e) {
 
-          console.error(e);
+          console.error(
+            '[LIA_OS] Error destruyendo módulo:',
+            e
+          );
 
         }
 
@@ -266,7 +303,6 @@ export class LIA_OS {
 
   /**
    * Registra un módulo con nombre.
-   * Útil para diagnóstico.
    *
    * @param {string} name
    * @param {{
@@ -338,6 +374,66 @@ export class LIA_OS {
     }
 
 
+    /*
+     * ============================================================
+     * HERO
+     *
+     * El banner rotativo sustituye directamente al bloque
+     * de métricas del Hero.
+     *
+     * Esto evita que aparezca después de todo el Hero.
+     * ============================================================
+     */
+
+    let heroMarkup =
+      Hero.render();
+
+
+    /*
+     * El bloque original era:
+     *
+     * <dl class="lia-hero__meta" ...>
+     *
+     * Se elimina completo y se sustituye por el banner.
+     *
+     * El regex es deliberadamente específico para no afectar
+     * ningún otro <dl> de la página.
+     */
+
+    const heroMetaPattern =
+      /<dl\s+class="lia-hero__meta"[\s\S]*?<\/dl>/;
+
+
+    if (
+      heroMetaPattern.test(
+        heroMarkup
+      )
+    ) {
+
+      heroMarkup =
+        heroMarkup.replace(
+          heroMetaPattern,
+        );
+
+    } else {
+
+      /*
+       * Fallback de seguridad:
+       *
+       * Si en una futura versión Hero.js ya no contiene
+       * las métricas, el banner se coloca inmediatamente
+       * después del contenido del Hero.
+       *
+       * No se pierde el banner.
+       */
+
+      console.warn(
+        '[LIA_OS] No se encontró .lia-hero__meta dentro de Hero.render(). El banner se montará después del Hero.'
+      );
+
+    }
+
+
     shell.innerHTML = [
 
       /*
@@ -354,11 +450,13 @@ export class LIA_OS {
 
       /*
        * ============================================================
-       * HERO
+       * HERO + BANNER
+       *
+       * El banner ya forma parte visual del Hero.
        * ============================================================
        */
 
-      Hero.render(),
+      heroMarkup,
 
 
       /*
@@ -448,8 +546,6 @@ export class LIA_OS {
       /*
        * ============================================================
        * LIA-TECH APPS
-       *
-       * Catálogo de todas las aplicaciones.
        * ============================================================
        */
 
@@ -524,8 +620,7 @@ export class LIA_OS {
 
     this.register(
       'scroll',
-      new ScrollEngine(
-        )
+      new ScrollEngine()
     );
 
 
@@ -644,7 +739,10 @@ export class LIA_OS {
 
           } catch (e) {
 
-            console.error(e);
+            console.error(
+              '[LIA_OS] Error en RAF:',
+              e
+            );
 
           }
 
