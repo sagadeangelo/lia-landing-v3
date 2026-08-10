@@ -1,12 +1,12 @@
 export const Simuladores = {
   render() {
     return /* html */ `
-      <section id="simuladores" class="lia-section" aria-labelledby="simuladores-title">
+      <section id="simulador" class="lia-section" aria-labelledby="simulador-title">
         <div class="lia-container">
           <div class="lia-grid-2">
             <div class="lia-stack lia-stack--lg">
               <div class="lia-eyebrow">Paso 1: Evalúate</div>
-              <h2 id="simuladores-title" class="lia-h2">Simulador EGEL</h2>
+              <h2 id="simulador-title" class="lia-h2">Simulador EGEL</h2>
               <p class="lia-lead">Mide tus conocimientos en tiempo real bajo las mismas condiciones del examen CENEVAL.</p>
               <ul class="lia-list" style="list-style: none; padding: 0;">
                 <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">✔</span> Preguntas actualizadas 2026</li>
@@ -14,7 +14,7 @@ export const Simuladores = {
                 <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">✔</span> Resultados por área</li>
               </ul>
               <div class="lia-actions">
-                <a href="#" class="lia-btn lia-btn--primary" data-modal data-modal-title="Simulador EGEL" data-modal-desc="El simulador en tiempo real estará disponible próximamente." data-modal-icon="🧪">🧪 Iniciar Simulador Gratis</a>
+                <a href="/simulador/" class="lia-btn lia-btn--primary" id="btn-iniciar-simulador">🧪 Iniciar Simulador Gratis</a>
               </div>
             </div>
             <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">

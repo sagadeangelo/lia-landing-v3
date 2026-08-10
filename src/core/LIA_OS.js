@@ -128,10 +128,10 @@ export class LIA_OS {
       Continuum.render(),
       '<div style="padding-top: var(--space-4xl); position: relative; z-index: 10;">',
       '<div class="lia-container"><div class="lia-divider"></div></div>',
-      Features.render(),
       TrainSection.render(),
       Simuladores.render(),
       Guias.render(),
+      Features.render(),
       AppShowcase.render(),
       Publish.render(),
       Library.render(),
@@ -144,6 +144,7 @@ export class LIA_OS {
       Footer.render(),
       ModalManager.render(),
     ].join('\n');
+
   }
 
   _registerCoreModules() {

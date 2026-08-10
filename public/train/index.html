@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B0A0F" />
+
+  <title>LIA Train — Simulador EGEL Gratuito · 7 Carreras · 120 Reactivos</title>
+  <meta name="description" content="Prepárate para el EGEL con el simulador gratuito de LIA Train. 7 carreras disponibles, 120 reactivos por examen, temporizador oficial de 120 minutos y diagnóstico por área temática." />
+  <meta name="keywords" content="simulador EGEL, preparación EGEL, CENEVAL, examen profesional, LIA Train, guías EGEL" />
+
+  <meta property="og:title" content="LIA Train — Simulador EGEL Gratuito" />
+  <meta property="og:description" content="7 carreras · 120 reactivos · Temporizador oficial · Diagnóstico por área. Sin registro." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_MX" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0B0A0F;
+      --surface:   #111018;
+      --surface2:  #18161f;
+      --border:    rgba(255,255,255,0.08);
+      --accent:    #06B6D4;
+      --accent2:   #7C3AED;
+      --text:      #F8FAFC;
+      --muted:     #94A3B8;
+      --success:   #10B981;
+      --warning:   #F59E0B;
+    }
+
+    html, body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,10,15,0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .nav-brand-name { font-weight: 800; font-size: 1rem; color: var(--text); letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.85rem; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 85vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 80px 24px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(6,182,212,0.12) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 40% at 80% 80%, rgba(124,58,237,0.08) 0%, transparent 70%);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.25);
+      border-radius: 999px; padding: 6px 20px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #F8FAFC 0%, var(--accent) 60%, var(--accent2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--muted); line-height: 1.6; max-width: 560px;
+      margin-bottom: 48px;
+    }
+    .hero-ctas {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 64px;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #000;
+      font-weight: 800; font-size: 1.05rem;
+      padding: 16px 36px; border-radius: 12px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      box-shadow: 0 0 32px rgba(6,182,212,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(6,182,212,0.5); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--text);
+      font-weight: 700; font-size: 1.05rem;
+      padding: 16px 36px; border-radius: 12px;
+      text-decoration: none; border: 1px solid var(--border);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(6,182,212,0.05); }
+
+    /* ─── STATS ─── */
+    .stats {
+      display: flex; gap: 32px; flex-wrap: wrap; justify-content: center;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 900; color: var(--accent); letter-spacing: -0.02em; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 500; margin-top: 4px; }
+
+    /* ─── SECTION ─── */
+    section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800; margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .section-sub { color: var(--muted); margin-bottom: 48px; font-size: 1rem; line-height: 1.6; }
+
+    /* ─── CAREERS GRID ─── */
+    .careers-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;
+    }
+    .career-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px 20px;
+      display: flex; align-items: center; gap: 16px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .career-card:hover { border-color: rgba(255,255,255,0.16); transform: translateY(-2px); }
+    .career-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .career-name { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+    .career-tag {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--success);
+      background: rgba(16,185,129,0.1); border-radius: 6px; padding: 2px 8px;
+      margin-top: 4px; display: inline-block;
+    }
+
+    /* ─── FEATURES GRID ─── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
+    }
+    .feature-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 24px;
+    }
+    .feature-icon { font-size: 1.75rem; margin-bottom: 16px; }
+    .feature-title { font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+    .feature-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
+
+    /* ─── CTA FINAL ─── */
+    .cta-final {
+      text-align: center; padding: 80px 24px 100px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.06) 0%, rgba(124,58,237,0.06) 100%);
+      border-top: 1px solid var(--border);
+    }
+    .cta-final h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 900; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .cta-final p { color: var(--muted); font-size: 1rem; margin-bottom: 36px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border); padding: 24px;
+      text-align: center; font-size: 0.8rem; color: var(--muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 60px 20px 40px; }
+      .stats { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-brand" aria-label="LIA-Tech inicio">
+      <div class="nav-brand-icon">⚡</div>
+      <span class="nav-brand-name">LIA Train</span>
+    </a>
+    <a href="/" class="nav-back">
+      ← Volver a LIA-Tech
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">⚡ Simulador EGEL Gratuito</div>
+    <h1>¿Pasarías tu EGEL<br>hoy?</h1>
+    <p class="hero-sub">
+      Descúbrelo con el simulador inteligente de LIA Train.<br>
+      Condiciones reales · Sin registro · Resultado inmediato.
+    </p>
+    <div class="hero-ctas">
+      <a href="/simulador/" id="btn-iniciar-hero" class="btn-primary">
+        🧪 Iniciar Simulador Gratis
+      </a>
+      <a href="#carreras" class="btn-secondary">
+        Ver carreras disponibles
+      </a>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Carreras EGEL</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">120</div>
+        <div class="stat-label">Reactivos por examen</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">120</div>
+        <div class="stat-label">Minutos oficiales</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">649+</div>
+        <div class="stat-label">Preguntas en banco</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARRERAS -->
+  <section id="carreras">
+    <h2 class="section-title">7 Carreras disponibles</h2>
+    <p class="section-sub">Selecciona tu carrera y comienza el simulador adaptado a tu examen EGEL.</p>
+    <div class="careers-grid">
+      <div class="career-card">
+        <div class="career-dot" style="background:#3B82F6;"></div>
+        <div>
+          <div class="career-name">Sistemas / TI</div>
+          <span class="career-tag">EGEL-ISOFT</span>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-dot" style="background:#10B981;"></div>
+        <div>
+          <div class="career-name">Administración</div>
+          <span class="career-tag">EGEL-LADM</span>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-dot" style="background:#F59E0B;"></div>
+        <div>
+          <div class="career-name">Derecho</div>
+          <span class="career-tag">EGEL-LEDER</span>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-dot" style="background:#8B5CF6;"></div>
+        <div>
+          <div class="career-name">Contaduría</div>
+          <span class="career-tag">EGEL-CP</span>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-dot" style="background:#06B6D4;"></div>
+        <div>
+          <div class="career-name">Ing. Industrial</div>
+          <span class="career-tag">EGEL-IND</span>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-dot" style="background:#EC4899;"></div>
+        <div>
+          <div class="career-name">Psicología</div>
+          <span class="career-tag">EGEL-PSI</span>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-dot" style="background:#EF4444;"></div>
+        <div>
+          <div class="career-name">Enfermería</div>
+          <span class="career-tag">EGEL-ENF</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARACTERÍSTICAS -->
+  <section id="como-funciona">
+    <h2 class="section-title">Como el examen real</h2>
+    <p class="section-sub">El simulador replica las condiciones oficiales del CENEVAL.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⏱️</div>
+        <div class="feature-title">Temporizador oficial</div>
+        <div class="feature-desc">120 minutos exactos, igual que el examen real. El simulador termina automáticamente al agotar el tiempo.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Dificultad progresiva</div>
+        <div class="feature-desc">Los 120 reactivos se distribuyen por nivel: 30 fáciles, 40 medios, 30 difíciles y 20 de alto desafío.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Diagnóstico por área</div>
+        <div class="feature-desc">Al terminar verás tu porcentaje por cada área temática, identificando tus fortalezas y puntos débiles.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔖</div>
+        <div class="feature-title">Marcado para revisión</div>
+        <div class="feature-desc">Marca preguntas para revisarlas antes de entregar, igual que el examen oficial.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎵</div>
+        <div class="feature-title">Modo Enfoque</div>
+        <div class="feature-desc">Activa música ambiental (lofi, piano, naturaleza) para concentrarte durante la simulación.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💡</div>
+        <div class="feature-title">Recomendación inteligente</div>
+        <div class="feature-desc">Al terminar, LIA Train te indica exactamente qué área reforzar y te sugiere el paso siguiente.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <div class="cta-final">
+    <h2>Empieza ahora. Es gratis.</h2>
+    <p>Sin registro. Sin tarjeta. Sin excusas.<br>Descubre si estás listo para aprobar tu EGEL.</p>
+    <a href="/simulador/" id="btn-iniciar-final" class="btn-primary" style="font-size:1.15rem; padding: 18px 48px;">
+      🧪 Iniciar Simulador Gratis
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>LIA Train es parte del ecosistema <a href="/">LIA-Tech</a>. · 2026</p>
+  </footer>
+
+</body>
+</html>
