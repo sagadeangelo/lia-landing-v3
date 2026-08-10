@@ -1,3 +1,8 @@
+// ─── URL COMERCIAL ────────────────────────────────────────────────────────────
+// Reemplaza '#' con la URL real de los servicios editoriales cuando esté disponible.
+// Ejemplo: 'https://lia-tech.com/publish' o enlace a formulario de Typeform/Calendly
+const PUBLISH_URL = '#';
+
 export const Publish = {
   render() {
     return /* html */ `
@@ -14,7 +19,7 @@ export const Publish = {
                 <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-primary)">✔</span> Diseño de portadas y branding</li>
               </ul>
               <div class="lia-actions">
-                <a href="#" class="lia-btn lia-btn--primary" data-modal data-modal-title="Servicios Editoriales" data-modal-desc="Los servicios editoriales de LIA Publish estarán disponibles próximamente." data-modal-icon="🚀">🚀 Ver Servicios Editoriales</a>
+                <a href="${PUBLISH_URL}" class="lia-btn lia-btn--primary" target="_blank" rel="noopener noreferrer">🚀 Ver Servicios Editoriales</a>
               </div>
             </div>
             <div class="lia-card lia-card--glow" style="padding: var(--space-6); text-align: center;">
@@ -24,9 +29,9 @@ export const Publish = {
             </div>
           </div>
           <div style="text-align: center; margin-top: var(--space-2xl);">
-             <a href="#ecosistema" class="lia-body" style="color: var(--text-muted); text-decoration: underline; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
+             <a href="#top" class="lia-body" style="color: var(--text-muted); text-decoration: underline; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-                Volver al ecosistema
+                Volver al inicio
              </a>
           </div>
         </div>
@@ -34,3 +39,4 @@ export const Publish = {
     `;
   }
 };
+

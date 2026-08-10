@@ -1,3 +1,8 @@
+// ─── URL COMERCIAL ────────────────────────────────────────────────────────────
+// Reemplaza '#' con el enlace real de Mercado Pago cuando esté disponible.
+// Ejemplo: 'https://www.mercadopago.com.mx/checkout/v1/redirect?pref_id=...'
+const MERCADOPAGO_GUIAS_URL = '#';
+
 export const Guias = {
   render() {
     return /* html */ `
@@ -19,7 +24,7 @@ export const Guias = {
                 <li style="margin-bottom: var(--space-2); display: flex; gap: var(--space-2);"><span style="color: var(--accent-secondary)">✔</span> Acceso offline y multiplataforma</li>
               </ul>
               <div class="lia-actions">
-                <a href="#" class="lia-btn lia-btn--secondary" data-modal data-modal-title="Guías de Estudio" data-modal-desc="Las guías de estudio estarán disponibles próximamente." data-modal-icon="📖">📖 Adquirir Guía</a>
+                <a href="${MERCADOPAGO_GUIAS_URL}" class="lia-btn lia-btn--secondary" target="_blank" rel="noopener noreferrer">📖 Adquirir Guía</a>
               </div>
             </div>
           </div>
@@ -34,3 +39,4 @@ export const Guias = {
     `;
   }
 };
+
