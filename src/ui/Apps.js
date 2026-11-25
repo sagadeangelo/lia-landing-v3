@@ -292,6 +292,11 @@ export const Apps = {
           </div>
 
 
+          ${import.meta.env.VITE_WRITER_STUDIO === 'true' ? `
+            <p class="lia-centered">
+              <a class="lia-btn lia-btn--primary" href="/studio">Herramientas para escritores</a>
+            </p>` : ''}
+
           <div class="lia-apps-grid">
 
             ${APPS.map((app) => `
