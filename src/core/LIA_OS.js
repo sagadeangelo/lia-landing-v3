@@ -385,55 +385,6 @@ export class LIA_OS {
      * ============================================================
      */
 
-    let heroMarkup =
-      Hero.render();
-
-
-    /*
-     * El bloque original era:
-     *
-     * <dl class="lia-hero__meta" ...>
-     *
-     * Se elimina completo y se sustituye por el banner.
-     *
-     * El regex es deliberadamente específico para no afectar
-     * ningún otro <dl> de la página.
-     */
-
-    const heroMetaPattern =
-      /<dl\s+class="lia-hero__meta"[\s\S]*?<\/dl>/;
-
-
-    if (
-      heroMetaPattern.test(
-        heroMarkup
-      )
-    ) {
-
-      heroMarkup =
-        heroMarkup.replace(
-          heroMetaPattern,
-        );
-
-    } else {
-
-      /*
-       * Fallback de seguridad:
-       *
-       * Si en una futura versión Hero.js ya no contiene
-       * las métricas, el banner se coloca inmediatamente
-       * después del contenido del Hero.
-       *
-       * No se pierde el banner.
-       */
-
-      console.warn(
-        '[LIA_OS] No se encontró .lia-hero__meta dentro de Hero.render(). El banner se montará después del Hero.'
-      );
-
-    }
-
-
     shell.innerHTML = [
 
       /*
@@ -456,7 +407,9 @@ export class LIA_OS {
        * ============================================================
        */
 
-      heroMarkup,
+      '<section id="lia-hero" class="lia-hero" aria-labelledby="lia-hero-title"><div class="lia-container lia-hero__grid">',
+      Hero.render(),
+      '</div></section>',
 
 
       /*
